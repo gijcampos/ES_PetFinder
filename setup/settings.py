@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # --> Coloque aqui os novos apps/ criados
+    'tutor',
 ]
 
 MIDDLEWARE = [
