@@ -1,0 +1,103 @@
+    :root {
+      --azul: #033960;
+      --rosa: #d18a8a;
+      --rosa-pata: #e8c3bf;
+      --branco: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      font-family: "Inter", sans-serif;
+      color: var(--azul);
+      background-color: var(--branco);background-image: url("pagina-patinhas.png");
+      background-size: cover;
+    }
+
+    .login {
+      width: 100%;
+      max-width: 640px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .logo {
+      display: block;
+      width: clamp(300px, 85vw, 800px);
+      height: auto;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    form {
+      width: 100%;
+      max-width: 440px;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .campo {
+      width: 100%;
+      height: 52px;
+      padding: 0 24px;
+      font: inherit;
+      font-size: 1.05rem;
+      color: var(--branco);
+      background: var(--azul);
+      border: 2px solid var(--azul);
+      border-radius: 999px;
+    }
+    .campo::placeholder { color: rgba(255, 255, 255, 0.75); }
+    .campo:-webkit-autofill {
+      -webkit-text-fill-color: var(--branco);
+      -webkit-box-shadow: 0 0 0 100px var(--azul) inset;
+      caret-color: var(--branco);
+    }
+
+    .campo:focus-visible,
+    .botao:focus-visible,
+    .cadastro:focus-visible {
+      outline: 3px solid var(--rosa);
+      outline-offset: 3px;
+    }
+
+    .botao {
+      height: 68px;
+      font: inherit;
+      font-size: 1.6rem;
+      color: var(--branco);
+      background: var(--azul);
+      border: 2px solid var(--azul);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .botao:hover { background: #022a47; }
+
+    .erro {
+      min-height: 1.2em;
+      font-size: 0.95rem;
+      color: #b3262d;
+    }
+
+    .cadastro {
+      margin-top: 14px;
+      font-size: 1rem;
+      color: var(--azul);
+    }
