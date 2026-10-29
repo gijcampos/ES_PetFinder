@@ -1,4 +1,80 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Contato de Emergência</title>
+    <link rel="precconnect" href="https://fonts.googleapis.com">
+    <link rel="precconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style5.css">
+</head>
+<body>
+  <header>
+    <a href="login.html" aria-label="PetFinder - voltar ao início">
+      <img class="logo" src="img/PetFinder-Logo.png" alt="PetFinder - Coleira inteligente">
+    </a>
+  </header>
+ 
+  <main>
+    <section class="cartao">
+      <h1>Cadastre seu contato de emergência!</h1>
+ 
+      <form id="form-contato" method="post" action="/contatos-emergencia/novo/">
+        <div class="grade">
+          <div class="nome">
+            <label for="nome">Nome*</label>
+            <input class="campo" id="nome" name="nome" type="text" autocomplete="off" required>
+          </div>
+ 
+          <div class="parentesco">
+            <label for="parentesco">Parentesco*</label>
+            <input class="campo" id="parentesco" name="parentesco" type="text"
+                   list="lista-parentesco" autocomplete="off" required>
+            <datalist id="lista-parentesco">
+              <option value="Pai">
+              <option value="Mãe">
+              <option value="Irmão(ã)">
+              <option value="Cônjuge">
+              <option value="Amigo(a)">
+            </datalist>
+          </div>
+ 
+          <div class="telefone">
+            <label for="telefone">Telefone*</label>
+            <input class="campo" id="telefone" name="telefone" type="tel"
+                   placeholder="(44) 99999-9999" inputmode="tel" autocomplete="off"
+                   pattern="\(?\d{2}\)?\s?\d{4,5}-?\d{4}"
+                   title="Digite o telefone com DDD, por exemplo (44) 99999-9999" required>
+          </div>
+ 
+          <div class="email">
+            <label for="email">E-mail*</label>
+            <input class="campo" id="email" name="email" type="email" autocomplete="off" required>
+          </div>
+ 
+          <fieldset class="principal">
+            <legend>Contato de emergência principal?*</legend>
+            <div class="opcoes">
+              <label class="opcao">
+                <input type="radio" name="principal" value="sim" required> Sim
+              </label>
+              <label class="opcao">
+                <input type="radio" name="principal" value="nao"> Não
+              </label>
+            </div>
+          </fieldset>
+        </div>
+ 
+        <div class="rodape">
+          <p class="obrigatorio">*Campos obrigatórios</p>
+          <div class="acoes">
+            <a class="cancelar" href="home.html">Cancelar</a>
+            <button type="submit" class="salvar">Salvar</button>
+          </div>
+        </div>
+      </form>
+    </section>
+</main>    
+</body>
 </html>
