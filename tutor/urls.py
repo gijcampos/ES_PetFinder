@@ -4,6 +4,8 @@ from . import views
 app_name = 'tutor'  # Ajuda no namespace das URLs em templates e redirecionamentos
 
 urlpatterns = [
-    # Exemplo de rota inicial para a view index/home do tutor:
-    # path('', views.index, name='index'),
+    path('cadastro/', views.cadastro, name='cadastro'),
+    path('login/', views.login, name='login'),
+    path('editar/<int:id>/', views.editar_perfil, name='editar_perfil'),
+    path('excluir/<int:id>/', views.excluir_perfil, name='excluir_perfil'),
 ]
