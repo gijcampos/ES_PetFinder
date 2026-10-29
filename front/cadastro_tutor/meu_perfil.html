@@ -49,8 +49,9 @@
 
     .excluir h2 { font: 400 2rem var(--fonte-titulo); margin-bottom: 10px; }
     .excluir p { margin-bottom: 16px; font-weight: 700; font-size: 1.1rem; }
-    .excluir .botao { min-width: 120px; }
-    .voltar { display: inline-block; margin-top: 16px; color: var(--branco); }
+    .excluir .botao { min-width: 190px; }
+    .pilha { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+    .cinza { background: #6b6b6b; }
 
     .fundo-modal { position: fixed; inset: 0; display: grid; place-items: center; padding: 16px; background: rgba(255, 120, 120, 0.45); }
     .modal { position: relative; width: min(460px, 100%); padding: 24px 24px 28px; text-align: center; color: #000; background: var(--branco); border: 1px solid #000; border-radius: 40px; }
@@ -110,8 +111,10 @@
       <section class="cartao excluir" aria-labelledby="t-excluir">
         <h2 id="t-excluir">Excluir conta</h2>
         <p>Remove permanentemente seus dados e os pets cadastrados.</p>
+        <div class="pilha">
         <button class="botao vermelho" type="button" id="btn-excluir">Excluir conta</button>
-        <a class="voltar" href="ambiente_usuario.html">Voltar ao ambiente</a>
+        <a class="botao cinza" href="ambiente_usuario.html">Voltar ao ambiente</a>
+        </div>
       </section>
     </div>
   </main>
