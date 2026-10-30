@@ -87,7 +87,7 @@ DATABASES = {
         'PASSWORD': os.environ.get('DB_PASSWORD', 'root'),
         # Dentro do Docker o host é o serviço "db"; fora dele, a porta 3307 é a exposta no compose.
         'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
-        'PORT': os.environ.get('DB_PORT', '3306'),
+        'PORT': os.environ.get('DB_PORT', '3307'),
         'OPTIONS': {
             'charset': 'utf8mb4',
         },
