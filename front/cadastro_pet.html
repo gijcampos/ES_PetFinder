@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PetFinder | Cadastro de pet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+  <header>
+    <a href="login.html" aria-label="PetFinder - voltar ao início">
+      <img class="logo" src="PetFinder-Logo.png" alt="PetFinder - Coleira inteligente"
+           onerror="this.style.display='none'">
+    </a>
+  </header>
+
+  <main>
+    <section class="cartao">
+      <h1>Cadastre seu pet!</h1>
+
+      <form id="form-pet">
+        <div class="grade">
+          <div class="nome">
+            <label for="nome">Nome*</label>
+            <input id="nome" name="nome" type="text" autocomplete="off" required>
+          </div>
+
+          <div class="idade">
+            <label for="idade">Idade*</label>
+            <input id="idade" name="idade" type="text" autocomplete="off" required>
+          </div>
+
+          <div class="especie">
+            <label for="especie">Espécie*</label>
+            <input id="especie" name="especie" type="text" list="lista-especies" autocomplete="off" required>
+            <datalist id="lista-especies">
+              <option value="Cachorro">
+              <option value="Gato">
+            </datalist>
+          </div>
+
+          <div class="raca">
+            <label for="raca">Raça*</label>
+            <input id="raca" name="raca" type="text" autocomplete="off" required>
+          </div>
+
+          <div class="coleira">
+            <label for="coleira">ID da coleira*</label>
+            <div class="campo-prefixo">
+              <span aria-hidden="true">#</span>
+              <input id="coleira" name="coleira" type="text" autocomplete="off" required>
+            </div>
+          </div>
+
+          <div class="obs">
+            <label for="obs">Observações:</label>
+            <textarea id="obs" name="obs" rows="1"></textarea>
+          </div>
+        </div>
+
+        <p class="status" id="status" role="status"></p>
+
+        <div class="rodape">
+          <p class="obrigatorio">*Campos obrigatórios</p>
+          <div class="acoes">
+            <button type="button" class="cancelar" id="cancelar">Cancelar</button>
+            <button type="submit" class="salvar">Salvar</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById("form-pet");
+    const status = document.getElementById("status");
+
+    const coleira = document.getElementById("coleira");
+    coleira.addEventListener("input", () => {
+      coleira.value = coleira.value.replace(/^#+/, "");
+    });
+
+    document.getElementById("cancelar").addEventListener("click", () => {
+      form.reset();
+      status.textContent = "";
+      if (history.length > 1) history.back();
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault(); 
+
+      const pet = Object.fromEntries(new FormData(form).entries());
+      Object.keys(pet).forEach((k) => (pet[k] = pet[k].trim()));
+
+      console.log("Pet para salvar:", pet);
+
+      status.textContent = "Pet cadastrado com sucesso!";
+      form.reset();
+    });
+  </script>
+</body>
+</html>
