@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     # --> Coloque aqui os novos apps/ criados
     'tutor',
+    'pet',
 ]
 
 MIDDLEWARE = [
