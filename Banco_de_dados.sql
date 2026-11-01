@@ -123,10 +123,10 @@ CREATE TABLE notificacao (
   FOREIGN KEY (id_coleira)      REFERENCES pet(id_coleira)
 );
 
-CREATE TABLE pet_tutor(
+CREATE TABLE pet_tutor (
   id_pet   INT NOT NULL,
   id_tutor INT NOT NULL,
   PRIMARY KEY (id_pet, id_tutor),
-  FOREIGN KEY (id_tutor)   REFERENCES tutor(id_tutor)     ON DELETE CASCADE,
-  FOREIGN KEY (id_pet) REFERENCES clinica(id_pet) ON DELETE CASCADE
-  );
+  FOREIGN KEY (id_tutor) REFERENCES tutor(id_tutor) ON DELETE CASCADE,
+  FOREIGN KEY (id_pet)   REFERENCES pet(id_pet)     ON DELETE CASCADE
+);
