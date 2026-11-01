@@ -1,12 +1,11 @@
 from django.db import models
-from usuarios.models import Tutor, Usuario
+from tutor.models import Tutor, Usuario
 
 
 class Pet(models.Model):
     # Tabela `pet`: o id da coleira e a chave primaria
     id_coleira = models.CharField(max_length = 9, primary_key = True)
     # Sem ON DELETE no SQL, logo o padrao e RESTRICT
-    id_tutor = models.ForeignKey(Tutor, on_delete = models.RESTRICT, db_column = 'id_tutor')
     nome = models.CharField(max_length = 60)
     especie = models.CharField(max_length = 30, blank = True, null = True)
     raca = models.CharField(max_length = 50, blank = True, null = True)
@@ -131,3 +130,12 @@ class Notificacao(models.Model):
 
     def __str__(self):
         return f"{self.tipo} para {self.id_usuario} @ {self.data_hora}"
+
+class PetTutor(models.Model):
+    pk = models.CompositePrimaryKey('id_coleira', 'id_tutor')
+    id_coleira = models.ForeignKey(Pet, on_delete = models.CASCADE, db_column = 'id_coleira')
+    id_tutor = models.ForeignKey(Tutor, on_delete = models.CASCADE, db_column = 'id_tutor')
+
+    class Meta:
+        db_table = 'pet_tutor'
+        managed = False

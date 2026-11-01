@@ -54,12 +54,10 @@ CREATE TABLE endereco (
 
 CREATE TABLE pet (
   id_coleira CHAR(9) PRIMARY KEY,
-  id_tutor   INT NOT NULL,
   nome       VARCHAR(60) NOT NULL,
   especie    VARCHAR(30),
   raca       VARCHAR(50),
-  idade      TINYINT UNSIGNED,
-  FOREIGN KEY (id_tutor) REFERENCES tutor(id_tutor)
+  idade      TINYINT UNSIGNED
 );
 
 CREATE TABLE historico_localizacao (
@@ -124,9 +122,9 @@ CREATE TABLE notificacao (
 );
 
 CREATE TABLE pet_tutor (
-  id_pet   INT NOT NULL,
-  id_tutor INT NOT NULL,
-  PRIMARY KEY (id_pet, id_tutor),
-  FOREIGN KEY (id_tutor) REFERENCES tutor(id_tutor) ON DELETE CASCADE,
-  FOREIGN KEY (id_pet)   REFERENCES pet(id_pet)     ON DELETE CASCADE
+  id_coleira CHAR(9) NOT NULL,
+  id_tutor   INT     NOT NULL,
+  PRIMARY KEY (id_coleira, id_tutor),
+  FOREIGN KEY (id_coleira) REFERENCES pet(id_coleira) ON DELETE CASCADE,
+  FOREIGN KEY (id_tutor)   REFERENCES tutor(id_tutor) ON DELETE CASCADE
 );
