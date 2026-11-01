@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Usuario, Tutor, Endereco
 
-# Register your models here.
+admin.site.register(Usuario)
+admin.site.register(Tutor)
+admin.site.register(Endereco)
