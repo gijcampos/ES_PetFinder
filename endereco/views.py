@@ -1,3 +1,49 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Endereco
+from .forms import EndForm
 
-# Create your views here.
+# ===== CADASTRAR ENDEREÇO =====
+
+def cadastrar(request):
+    if request.method == 'POST':
+        form = EndForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            # POSSIVEL TELA DE REDIRECIONAMENTO PARA DEPOIS DE CADASRTRAR UM ENDEREÇO   
+            return redirect()
+
+    else:
+        form = EndForm()
+
+    # !!! COLOCAR CAMINHO HTML DA TELA DE CADASTRO DE ENDEREÇO !!!
+    return render(request, 'endereco/', {'form': form})
+
+# ===== EDITAR ENDEREÇO =====
+
+def editar(request, id):
+    endereco = get_object_or_404(Endereco, id=id)
+
+    if request.method == 'POST':
+        form = EndForm(request.POST, instance=endereco)
+
+        if form.is_valid():
+            form.save()
+            return redirect('') # COLOCAR POSSIVEL TELA DE LISTAGEM OU EDIÇÃO
+    else:
+        form = EndForm(instance=endereco)
+
+    # !!! COLOCAR CAMINHO DO HTML DE EDICAO DE ENDERECO !!!
+    return render(request, 'endereco/', {'form': form, 'endereco': endereco})
+
+# ===== EXCLUIR ENDEREÇO =====
+
+def excluir(request, id):
+    endereco = get_object_or_404(Endereco, id=id)
+    
+    if request.method == 'POST':
+        endereco.delete()
+        # POSSIVEL CAMINHO PARA REDIRECIONAR DEPOIS DE EXCLUIR ENDEREÇO
+        return redirect('')
+
+    return render(request, 'endereco/', {'endereco': endereco})
