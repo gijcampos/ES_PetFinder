@@ -10,8 +10,7 @@ def cadastrar(request):
 
         if form.is_valid():
             form.save()
-            # POSSIVEL TELA DE REDIRECIONAMENTO PARA DEPOIS DE CADASRTRAR UM ENDEREÇO   
-            return redirect()
+            return redirect() # POSSIVEL TELA HTML DE REDIRECIONAMENTO PARA DEPOIS DE CADASRTRAR UM ENDEREÇO
 
     else:
         form = EndForm()
@@ -43,7 +42,7 @@ def excluir(request, id):
     
     if request.method == 'POST':
         endereco.delete()
-        # POSSIVEL CAMINHO PARA REDIRECIONAR DEPOIS DE EXCLUIR ENDEREÇO
-        return redirect('')
+        return redirect('') # POSSIVEL CAMINHO PARA REDIRECIONAR DEPOIS DE EXCLUIR ENDEREÇO
 
+    # !!! COLOCAR CAMINHO DO HTML PARA REDIRECIONAR DEPOIS DA EXCLUSÃO DE ENDEREÇO JÁ CADASTRADO !!!
     return render(request, 'endereco/', {'endereco': endereco})
