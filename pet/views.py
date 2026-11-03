@@ -18,7 +18,7 @@ def cadastrar(request):
 
         if form.is_valid():
             form.save()
-            return redirect('listar_pets')
+            return redirect("listar_pets")
 
     else:
         form = PetForm()
