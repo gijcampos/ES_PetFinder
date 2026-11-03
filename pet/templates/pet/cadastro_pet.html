@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PetFinder | Cadastro de pet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <!-- CSS renomeado e vinculado com a tag static do Django -->
+  <link rel="stylesheet" href="{% static 'pet.css' %}">
+</head>
+<body>
+  <header>
+    <!-- URL ajustada para a rota de listagem de pets configurada no urls.py -->
+    <a href="{% url 'listar_pets' %}" aria-label="PetFinder - voltar ao início">
+      <!-- Imagem vinculada com a tag static -->
+      <img class="logo" src="{% static 'PetFinder-Logo.png' %}" alt="PetFinder - Coleira inteligente"
+           onerror="this.style.display='none'">
+    </a>
+  </header>
+
+  <main>
+    <section class="cartao">
+      <h1>Cadastre seu pet!</h1>
+
+      <!-- Método POST e action apontando para a sua view adicionados -->
+      <form id="form-pet" method="POST" action="{% url 'cadastrar_pet' %}">
+        {% csrf_token %}
+        <div class="grade">
+          <div class="nome">
+            <label for="nome">Nome*</label>
+            <input id="nome" name="nome" type="text" autocomplete="off" required>
+          </div>
+
+          <div class="idade">
+            <label for="idade">Idade*</label>
+            <input id="idade" name="idade" type="number" autocomplete="off" required>
+          </div>
+
+          <div class="especie">
+            <label for="especie">Espécie*</label>
+            <input id="especie" name="especie" type="text" list="lista-especies" autocomplete="off" required>
+            <datalist id="lista-especies">
+              <option value="Cachorro">
+              <option value="Gato">
+            </datalist>
+          </div>
+
+          <div class="raca">
+            <label for="raca">Raça*</label>
+            <input id="raca" name="raca" type="text" autocomplete="off" required>
+          </div>
+
+          <div class="coleira">
+            <label for="id_disp_rastreamento">ID da coleira*</label>
+            <div class="campo-prefixo">
+              <span aria-hidden="true">#</span>
+              <!-- Nome e ID alterados para bater com o models.py -->
+              <input id="id_disp_rastreamento" name="id_disp_rastreamento" type="text" autocomplete="off" required>
+            </div>
+          </div>
+
+          <div class="obs">
+            <label for="obs">Observações:</label>
+            <textarea id="obs" name="obs" rows="1"></textarea>
+          </div>
+        </div>
+
+        <p class="status" id="status" role="status"></p>
+
+        <div class="rodape">
+          <p class="obrigatorio">*Campos obrigatórios</p>
+          <div class="acoes">
+            <button type="button" class="cancelar" id="cancelar">Cancelar</button>
+            <button type="submit" class="salvar">Salvar</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- Chamada para o arquivo JS isolado -->
+  <script src="{% static 'pet.js' %}"></script>
+</body>
+</html>
