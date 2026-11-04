@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PetFinder | Meu ambiente</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --azul: #033960; --cartao: #9a757d; --campo: #d9d9d9; --branco: #fff;
+      --verde: #2e8b1f; --vermelho: #cc0000;
+      --fonte-titulo: "Montserrat", sans-serif; --fonte-texto: "Quicksand", sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; display: flex; flex-direction: column; font-family: var(--fonte-texto); background: var(--azul); color: var(--branco); }
+
+    .topo {
+      padding: 16px 40px;
+      background-color: var(--branco);
+      background-image: url("pagina-patinhas-clara.png");
+      background-size: cover;
+    }
+    .logo { display: block; height: 130px; width: auto; }
+
+    .pagina { flex: 1; padding: 16px 22px 28px; }
+    .barra { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin-bottom: 14px; }
+    h1 { font: 400 clamp(2rem, 5vw, 3.4rem)/1.1 var(--fonte-titulo); overflow-wrap: anywhere; }
+
+    .grade { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 18px; align-items: start; }
+    .cartao { padding: 18px 24px 22px; background: var(--cartao); border-radius: 28px; }
+    .cartao h2 { font: 400 2rem var(--fonte-titulo); margin-bottom: 12px; }
+
+    /* Área reservada ao mapa (HU012) */
+    .mapa { min-height: 340px; display: grid; place-content: center; justify-items: center; gap: 12px; padding: 24px; text-align: center; border: 2px dashed rgba(255, 255, 255, .7); border-radius: 18px; }
+    .mapa p { font-size: 1.1rem; }
+    .selo { display: inline-block; padding: 2px 12px; font: 700 .8rem var(--fonte-texto); font-style: normal; color: var(--azul); background: var(--branco); border-radius: 999px; }
+
+    /* Atalhos */
+    .atalhos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .atalho { display: flex; flex-direction: column; gap: 4px; min-height: 96px; padding: 14px 16px; color: var(--branco); text-decoration: none; background: var(--cartao); border: 2px solid transparent; border-radius: 20px; }
+    .atalho strong { font: 500 1.1rem/1.25 var(--fonte-titulo); }
+    .atalho span { font-size: .9rem; }
+    a.atalho:hover { filter: brightness(1.1); }
+    a.atalho:focus-visible, .botao:focus-visible { outline: 3px solid var(--branco); outline-offset: 3px; }
+    .atalho.breve { background: transparent; border: 2px dashed rgba(255, 255, 255, .7); cursor: default; }
+    .atalho.breve .selo { align-self: flex-start; margin-top: auto; }
+
+    .botao { display: inline-flex; align-items: center; justify-content: center; min-width: 140px; height: 40px; padding: 0 28px; font: 500 1rem var(--fonte-titulo); color: var(--branco); border: 0; border-radius: 999px; cursor: pointer; }
+    .vermelho { background: var(--vermelho); }
+    .botao:hover { filter: brightness(0.9); }
+
+    @media (max-width: 860px) {
+      .grade { grid-template-columns: 1fr; }
+      .logo { height: 90px; }
+      .mapa { min-height: 220px; }
+    }
+    @media (max-width: 480px) { .atalhos { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="topo">
+    <img class="logo" src="PetFinder-Logo.png" alt="PetFinder - Coleira inteligente" onerror="this.style.display='none'">
+  </header>
+
+  <main class="pagina">
+    <div class="barra">
+      <h1 id="saudacao">Olá!</h1>
+      <button class="botao vermelho" type="button" id="btn-sair">Sair</button>
+    </div>
+
+    <div class="grade">
+      <!-- HU012: o mapa em tempo real entra aqui -->
+      <section class="cartao" id="area-mapa" aria-labelledby="t-mapa">
+        <h2 id="t-mapa">Onde está o seu pet</h2>
+        <div class="mapa">
+          <span class="selo">Em breve</span>
+          <p>O mapa com a localização do seu pet vai aparecer aqui.</p>
+        </div>
+      </section>
+
+      <!--
+        Atalhos. Para ativar um "Em breve", troque o <div class="atalho breve"> por
+        <a class="atalho" href="arquivo.html"> e apague o <em class="selo">.
+      -->
+      <nav class="atalhos" aria-label="Atalhos da conta">
+        <a class="atalho" href="meu_perfil.html" data-repassar-id>
+          <strong>Meu perfil</strong><span>Editar seus dados</span>
+        </a>
+        <div class="atalho breve" aria-disabled="true">
+          <strong>Pets</strong><span>Cadastre e gerencie seus pets</span><em class="selo">Em breve</em>
+        </div>
+        <div class="atalho breve" aria-disabled="true">
+          <strong>Endereço</strong><span>O ponto central do monitoramento</span><em class="selo">Em breve</em>
+        </div>
+        <div class="atalho breve" aria-disabled="true">
+          <strong>Contatos de emergência</strong><span>Quem avisamos se você não puder</span><em class="selo">Em breve</em>
+        </div>
+        <div class="atalho breve" aria-disabled="true">
+          <strong>Clínica veterinária</strong><span>Sua clínica de preferência</span><em class="selo">Em breve</em>
+        </div>
+        <div class="atalho breve" aria-disabled="true">
+          <strong>Agendamentos</strong><span>Consultas e atendimentos</span><em class="selo">Em breve</em>
+        </div>
+        <div class="atalho breve" aria-disabled="true">
+          <strong>Histórico de localização</strong><span>O trajeto diário do seu pet</span><em class="selo">Em breve</em>
+        </div>
+        <a class="atalho" href="lista_tutores.html" data-repassar-id>
+          <strong>Lista de tutores</strong><span>Tutores cadastrados</span>
+        </a>
+      </nav>
+    </div>
+  </main>
+
+  <script src="cadastro_de_tutor/demo.js"></script>
+  <script>
+    if (typeof Demo === "undefined") {
+      alert("Não foi possível carregar o arquivo cadastro_de_tutor/demo.js. Confira se ele está nessa pasta, dentro de front.");
+      throw new Error("demo.js não carregou");
+    }
+    // BACK: usar o usuário da sessão (request.user).
+    // Quem é o tutor? ?id=1 na URL ou o e-mail guardado no login (simulação).
+    const params = new URLSearchParams(location.search);
+    const emailLogado = localStorage.getItem("usuarioLogado");
+    const tutor = Demo.listar().find((t) =>
+      params.has("id") ? t.id === Number(params.get("id"))
+                       : emailLogado && t.email.toLowerCase() === emailLogado.toLowerCase());
+    if (!tutor) location.replace("tela_login.html");
+
+    // Saudação com o nome do tutor
+    document.getElementById("saudacao").textContent = "Olá, " + tutor.nome + "!";
+
+    // Mantém o ?id= nos links, quando ele existir
+    if (params.has("id")) {
+      document.querySelectorAll("a[data-repassar-id]").forEach((a) => {
+        a.href = a.getAttribute("href") + "?id=" + encodeURIComponent(params.get("id"));
+      });
+    }
+
+    // Sair: encerra a sessão e volta ao login
+    document.getElementById("btn-sair").addEventListener("click", () => {
+      localStorage.removeItem("usuarioLogado");   // BACK: encerrar a sessão (logout)
+      location.href = "tela_login.html";
+    });
+  </script>
+</body>
+</html>
