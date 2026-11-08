@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'tutor',
     'pet',
     'endereco',
+    'emergencia',
 ]
 
 MIDDLEWARE = [
