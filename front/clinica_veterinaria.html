@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PetFinder | Clínicas abertas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style-clinica.css">
+</head>
+<body>
+  <header>
+    <a href="login.html" aria-label="PetFinder - voltar ao início">
+      <img class="logo" src="img/PetFinder-Logo.png" alt="PetFinder - Coleira inteligente">
+    </a>
+  </header>
+
+  <main>
+    <section class="cartao">
+      <div class="esquerda">
+        <form id="busca" role="search">
+          <svg class="lupa" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+            <circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M15 15l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input id="texto-busca" type="search" placeholder="Busque o nome da clínica veterinária"
+                 aria-label="Buscar clínica veterinária" autocomplete="off">
+        </form>
+        <div id="mapa" class="mapa" aria-label="Mapa das clínicas veterinárias"></div>
+      </div>
+
+      <ul id="lista" class="lista" aria-live="polite"></ul>
+    </section>
+  </main>
+
+  <script src="clinicas.js"></script>
+  <!-- Em Django, use: key={{ GOOGLE_MAPS_API_KEY }} -->
+  <script async
+    src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_AQUI&loading=async&callback=iniciarMapa&language=pt-BR&region=BR"></script>
+</body>
+</html>
