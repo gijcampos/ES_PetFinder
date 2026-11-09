@@ -49,3 +49,12 @@ def excluir(request, id_contato):
         return redirect('login') # --> COLOCAR ALGUMA ROTA PARA DEPOIS DA EXCLUSÃO DO CONTATO DE EMERGENCIA !!!
 
     return render(request, 'emergencia/', {'contato': contato}) # --> COLOCAR ALGUMA ROTA PARA A TELA DE EXCLUSÃO DE CONTATO !!!
+
+# ===== LISTAGEM =====
+
+def listar(request, id_tutor):
+    tutor = get_object_or_404(Cadastro, id=id_tutor)
+
+    contatos = ContatoEmergencia.objects.filter(tutor=tutor)
+
+    return render(request, 'emergencia/', {'contatos': contatos, 'tutor': tutor}) # --> COLOCAR UMA ROTA HTML PARA A LISTAGEM DE CONTATOS DE EMERGERNCIA !!!
