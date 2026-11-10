@@ -9,7 +9,7 @@ class EndForm(forms.ModelForm):
     class Meta:
         model = Endereco
         fields = [
-            'CEP',
+            'cep',
             'rua',
             'logradouro',
             'numero',

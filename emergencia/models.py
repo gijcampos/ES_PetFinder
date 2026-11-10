@@ -1,7 +1,7 @@
 from django.db import models
 from tutor.models import Cadastro
 
-class ContatoEmergencia(models.fields.Model):
+class ContatoEmergencia(models.Model):
     tutor = models.ForeignKey(Cadastro, on_delete=models.CASCADE, related_name='contatos_emergencia')
 
     nome = models.CharField(max_length=150, verbose_name="Nome")

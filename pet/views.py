@@ -1,47 +1,57 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Pet
-from .forms import PetsForm
+from .forms import PetForm
+
+# ===== LISTAR PETS =====
 
 def listar_pets(request):
-    pets = Pet.objects.all()
-    return render(request, 'pets/<listar_pets.html>', {'pets': pets})
+    pet = Pet.objects.all()
 
-def cadastrar_pets(request):
+        # !!! FALTA COLOCAR O CAMINHO DO HTML DE LISTAGEM DE PETS !!!
+    return render(request, 'pet/', {'pet': pet})
+
+# ===== CADASTRAR PETS =====
+
+def cadastrar(request):
     if request.method == 'POST':
-        form = PetsForm(request.POST)
+        form = PetForm(request.POST)
 
         if form.is_valid():
             form.save()
             return redirect("listar_pets")
 
     else:
-        form = PetsForm()
-    return render(request, 'pets/cadastrar_pets.html', {'form': form})
+        form = PetForm()
+
+    # !!! FALTA COLOCAR O CAMINHO DO HTML DE CADASTRO DE PET !!!
+    return render(request, 'pet/', {'form': form})
 
 # ===== EDIÇÃO DE PETS =====
 
-def editar_pets(request, id):
-    pets = get_object_or_404(Pet, pk=id)
+def editar(request, id):
+    pet = get_object_or_404(Pet, id=id)
 
     if request.method == 'POST':
-        form = PetsForm(request.POST, instance=pets)
+        form = PetForm(request.POST, instance=pet)
 
         if form.is_valid():
             form.save()
             return redirect('listar_pets')
 
     else:
-        form = PetsForm(instance=pets)
+        form = PetForm(instance=pet)
 
-    return render(request, 'pets/<editar_pets.html>', {'form': form, 'pets': pets})
+    # !!! FALTA COLOCAR O CAMINHO DO HTML DE EDIÇÃO DE PET !!!
+    return render(request, 'pet/', {'form': form, 'pet': pet})
 
 # ===== EXCLUSÃO DE PETS =====
 
-def excluir_pets(request, id):
-    pets = get_object_or_404(Pet, pk=id)
+def excluir(request, id):
+    pet = get_object_or_404(Pet, id=id)
 
     if request.method == 'POST':
-        pets.delete()
+        pet.delete()
         return redirect('listar_pets')
 
-    return render(request, 'pets/<excluir_pets.html>', {'pets': pets})
+    # !!! FALTA COLOCAR O CAMINHO DO HTML DE EXCLUSÃO DE PET !!!
+    return render(request, 'pet/', {'pet': pet})

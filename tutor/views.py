@@ -1,64 +1,57 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.hashers import make_password
-from .models import Usuario
+from .models import Cadastro
 from .forms import CadastroForm
 
-# ===== Arquivo que lida com as criações e validações dos formularios =====
+# ===== Formulário de Cadastro =====
 
 def cadastro(request):
-    # Verifique se o usuario apertou Enter
-    if request.method == 'POST': 
+    if request.method == 'POST':
         form = CadastroForm(request.POST)
-        # Executa automaticamente as validações pelo próprio Django
+
         if form.is_valid():
             usuario = form.save(commit = False)
-            #Pega a senha e a transforma em hash
-            usuario.senha_hash = make_password(form.cleaned_data['senha'])
+            # Transforma a senha em Hash
+            usuario.senha = make_password(form.cleaned_data['senha'])
             usuario.save()
 
-            #Redireciona o Cadastro para o Login
-            return redirect('login') 
-
+            #redirecionamento do Cadastro para o Login
+            return redirect('login')
     else:
         form = CadastroForm()
 
-    return render(request, 'usuarios/<tela_do_cadastro.html>', {'form': form}) # !!! MUDAR <tela_do_cadastro.html> PARA SEU RESPECTIVO ARQUIVO QUANDO HOUVER A TELA DE CADASTRO !!!
+    return render(request, 'usuarios/tela_cadastro.html', {'form': form})
 
 # ===== Tela de Login =====
 
-def login_view(request):
-    return render(request, 'usuarios/usuario_login.html')
+def login(request):
+    return render(request, 'usuarios/login.html')
 
-# ===== Funções de Edição e Exclusão do formulário de Cadastro =====
+# ===== Edição Cadastro ==== 
 
-def editar_perfil(request, id): #Solicita o ID do cadastro do usuario
-    cadastro = get_object_or_404(Usuario, pk=id) #Faz a busca se não retornar nada aparece o erro 404;
+def editar_perfil(request, id):
+    cadastro = get_object_or_404(Cadastro, id=id)
 
     if request.method == 'POST':
-        
         form = CadastroForm(request.POST, instance=cadastro)
-        
+
         if form.is_valid():
             form.save()
-            return redirect('perfil_sucesso', id=cadastro.id)
-    
+
+            return redirect() # !!! COLOCAR UM REDIRECIONAMENTO PARA LISTA DE TUTORES !!!
     else:
         form = CadastroForm(instance=cadastro)
 
-    return render(
-        request, 'usuarios/<editar_perfil.html>', {'form': form, 'cadastro': cadastro}
-    )
+    return render(request, 'usuario/editar_perfil.html', {'form': form, 'cadastro': cadastro})
+
+# ===== Excluir Cadastro =====
 
 def excluir_perfil(request, id):
-    cadastro = get_object_or_404(Usuario, pk=id)
+    cadastro = get_object_or_404(Cadastro, id=id)
 
     if request.method == 'POST':
         cadastro.delete()
-        
-        return redirect(
-            'cadastro'
-        )
 
-    return render(
-        request, 'usuarios/<excluir_perfil.html>', {'cadastro': cadastro}
-    )
+        return redirect('cadastro')
+
+    return render(request, 'usuario/excluir_perfil.html', {'cadastro': cadastro})
