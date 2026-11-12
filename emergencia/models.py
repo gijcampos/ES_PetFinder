@@ -1,15 +1,21 @@
 from django.db import models
-from tutor.models import Cadastro
+from tutor.models import Usuario, Tutor  # Importa as dependências do app tutor
+
 
 class ContatoEmergencia(models.Model):
-    tutor = models.ForeignKey(Cadastro, on_delete=models.CASCADE, related_name='contatos_emergencia')
+    class Parentesco(models.TextChoices):
+        PAI = 'Pai', 'Pai'
+        MAE = 'Mãe', 'Mãe'
+        FILHO_A = 'Filho(a)', 'Filho(a)'
+        AMIGO_A = 'Amigo(a)', 'Amigo(a)'
+        CONJUGE = 'Cônjuge', 'Cônjuge'
+        OUTROS = 'Outros', 'Outros'
 
-    nome = models.CharField(max_length=150, verbose_name="Nome")
-    parentesco = models.CharField(max_length=50, verbose_name="Parentesco")
-    telefone = models.CharField(max_length=20, verbose_name="Telefone")
-    email = models.EmailField(verbose_name="E-mail")
+    pk = models.CompositePrimaryKey('id_contato', 'id_tutor')
+    id_contato = models.ForeignKey(Usuario, on_delete=models.CASCADE, db_column='id_contato')
+    id_tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, db_column='id_tutor')
+    parentesco = models.CharField(max_length=20, choices=Parentesco.choices)
 
-    principal = models.BooleanField(default=False, verbose_name="Contato de emergencia principal?")
-
-    def __str__(self):
-        return f"{self.nome} {self.parentesco} - Tutor: {self.tutor}"
+    class Meta:
+        db_table = 'contato_emergencia'
+        managed = False
