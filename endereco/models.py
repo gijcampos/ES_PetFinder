@@ -1,5 +1,4 @@
 from django.db import models
-from tutor.models import Cadastro
 
 class Endereco(models.Model):
     cep = models.CharField(max_length=9)

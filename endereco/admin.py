@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Endereço
+from .models import Endereco
 
-admin.site.register(Endereço)
+admin.site.register(Endereco)

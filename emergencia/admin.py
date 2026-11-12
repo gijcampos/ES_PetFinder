@@ -1,4 +1,4 @@
 from django.contrib import admin
-from tutor.models import ContatoEmergencia
+from emergencia.models import ContatoEmergencia
 
 # Register your models here.
