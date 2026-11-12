@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'pet',
     'endereco',
     'emergencia',
+    'notificacao',
     'clinica',
 ]
 
