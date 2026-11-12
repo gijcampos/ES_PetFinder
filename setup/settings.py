@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'endereco',
     'emergencia',
     'notificacao',
+    'clinica',
 ]
 
 MIDDLEWARE = [
