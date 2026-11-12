@@ -40,9 +40,9 @@ class HistoricoLocalizacao(models.Model):
 class Agendamento(models.Model):
     # Tabela `agendamento`
     id_agendamento = models.AutoField(primary_key=True)
-    id_tutor = models.ForeignKey(Tutor, on_delete = models.RESTRICT, db_column = 'id_tutor')
-    id_coleira = models.ForeignKey(Pet, on_delete = models.RESTRICT, db_column = 'id_coleira')
-    id_clinica = models.ForeignKey(Clinica, on_delete = models.RESTRICT, db_column = 'id_clinica')
+    id_tutor = models.ForeignKey('Tutor', on_delete = models.RESTRICT, db_column = 'id_tutor')
+    id_coleira = models.ForeignKey('Pet', on_delete = models.RESTRICT, db_column = 'id_coleira')
+    id_clinica = models.ForeignKey('Clinica', on_delete = models.RESTRICT, db_column = 'id_clinica')
     data_hora = models.DateTimeField()
 
     class Meta:
