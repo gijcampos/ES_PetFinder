@@ -4,6 +4,12 @@ from clinica.models import Clinica
 from pet.models import Pet
 
 class Agendamento(models.Model):
+
+    TIPO_ATENDIMENTO_CHOICES = [
+        ('consulta', 'Consulta'),
+        ('vacina', 'Vacina'),
+        ('exame', 'Exame'),
+    ]
     # Tabela `agendamento`
     id_agendamento = models.AutoField(primary_key=True)
     id_tutor = models.ForeignKey(Tutor, on_delete = models.RESTRICT, db_column = 'id_tutor')
@@ -11,9 +17,14 @@ class Agendamento(models.Model):
     id_clinica = models.ForeignKey(Clinica, on_delete = models.RESTRICT, db_column = 'id_clinica')
     data_hora = models.DateTimeField()
 
+    tipo_atendimento = models.CharField(
+        max_length=20,
+        choices=TIPO_ATENDIMENTO_CHOICES,
+        default='consulta'
+    )
     class Meta:
         db_table = 'agendamento'
-        managed = False
+        # managed = False
         constraints = [
             models.UniqueConstraint(
                 fields = ['id_clinica', 'data_hora'],

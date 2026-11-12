@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'emergencia',
     'notificacao',
     'clinica',
+    'agendamento',
 ]
 
 MIDDLEWARE = [
