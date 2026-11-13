@@ -31,6 +31,7 @@ class HistoricoLocalizacao(models.Model):
     class Meta:
         db_table = 'historico_localizacao'
         managed = False
+        ordering = ['data_hora']
         indexes = [
             models.Index(fields = ['id_coleira', 'data_hora']),
         ]
