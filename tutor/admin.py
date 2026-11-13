@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Usuario, Tutor, Endereco
+from .models import Usuario, Tutor
+from endereco.models import Endereco
 
 admin.site.register(Usuario)
 admin.site.register(Tutor)
