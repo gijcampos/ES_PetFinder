@@ -4,11 +4,9 @@ from .models import (
     HistoricoLocalizacao,
     Clinica,
     Agendamento,
-    Notificacao,
 )
 
 admin.site.register(Pet)
 admin.site.register(HistoricoLocalizacao)
 admin.site.register(Clinica)
 admin.site.register(Agendamento)
-admin.site.register(Notificacao)

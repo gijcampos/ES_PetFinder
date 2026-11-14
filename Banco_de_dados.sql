@@ -1,3 +1,4 @@
+SET NAMES utf8mb4;
 CREATE DATABASE IF NOT EXISTS coleira_pet CHARACTER SET utf8mb4;
 USE coleira_pet;
 
