@@ -30,23 +30,39 @@ def cadastro(request, id_tutor):
 
 def listar(request, id_tutor):
     tutor = get_object_or_404(Tutor, pk=id_tutor)
-    
     termo_busca = request.GET.get('q', '')
+    apenas_abertas = request.GET.get('apenas_abertas') in ['1', 'true', 'on']
 
-    # Busca as clínicas já com status (ABERTA/FECHADA), próximo horário,
-    # suporte a 24h/feriados e marcação de favorita (estrela) para este tutor
     clinicas = listar_clinicas_com_status(
         tutor=tutor,
-        termo_busca=termo_busca
+        termo_busca=termo_busca,
+        apenas_abertas=apenas_abertas
     )
 
     context = {
         'clinicas': clinicas,
         'tutor': tutor,
         'termo_busca': termo_busca,
+        'apenas_abertas': apenas_abertas,
     }
 
     return render(request, 'clinica/', context)  # --> COLOCAR UMA ROTA HTML PARA A LISTAGEM DAS CLINICAS
+
+# ===== CLINICA FAVORITA =====
+
+def favorita(request, id_tutor, id_clinica):
+    """Favorita ou desfavorita uma clínica (estrela) para o tutor."""
+    if request.method == 'POST':
+        tutor = get_object_or_404(Tutor, pk=id_tutor)
+        clinica = get_object_or_404(Clinica, pk=id_clinica)
+
+        vinculo = TutorClinica.objects.filter(id_tutor=tutor, id_clinica=clinica)
+        if vinculo.exists():
+            vinculo.delete()
+        else:
+            TutorClinica.objects.create(id_tutor=tutor, id_clinica=clinica)
+
+    return redirect('listar_clinicas', id_tutor=id_tutor)
 
 # ===== EDITAR =====
 
