@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Clinica, TutorClinica
 from .forms import ClinicaForm
 from tutor.models import Tutor
+from .services import listar_clinicas_com_status
 
 # ===== CADASTRO DA CLINICA =====
 
@@ -30,14 +31,22 @@ def cadastro(request, id_tutor):
 def listar(request, id_tutor):
     tutor = get_object_or_404(Tutor, pk=id_tutor)
     
-    # Se quiser listar todas as clínicas cadastradas no sistema:
-    # clinicas = Clinica.objects.all()
-    
-    # Ou se quiser listar apenas as clínicas favoritas/vinculadas a este tutor específico:
-    ids_clinicas = TutorClinica.objects.filter(id_tutor=tutor).values_list('id_clinica', flat=True)
-    clinicas = Clinica.objects.filter(pk__in=ids_clinicas)
-    
-    return render(request, 'clinica/', {'clinicas': clinicas, 'tutor': tutor}) # --> COLOCAR UMA ROTA HMTL PARA A LISTAGEM DAS CLINICAS
+    termo_busca = request.GET.get('q', '')
+
+    # Busca as clínicas já com status (ABERTA/FECHADA), próximo horário,
+    # suporte a 24h/feriados e marcação de favorita (estrela) para este tutor
+    clinicas = listar_clinicas_com_status(
+        tutor=tutor,
+        termo_busca=termo_busca
+    )
+
+    context = {
+        'clinicas': clinicas,
+        'tutor': tutor,
+        'termo_busca': termo_busca,
+    }
+
+    return render(request, 'clinica/', context)  # --> COLOCAR UMA ROTA HTML PARA A LISTAGEM DAS CLINICAS
 
 # ===== EDITAR =====
 
