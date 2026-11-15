@@ -10,12 +10,13 @@ class EndForm(forms.ModelForm):
         model = Endereco
         fields = [
             'cep',
-            'rua',
             'logradouro',
             'numero',
             'bairro',
             'cidade',
-            'estado'
+            'estado',
+            'latitude',
+            'longitude',
         ]
 
 # Função de Verificação de Endereço Inválido
