@@ -1,7 +1,6 @@
 from django.db import models
 from tutor.models import Tutor, Usuario
 
-
 class Pet(models.Model):
     # Tabela `pet`: o id da coleira e a chave primaria
     id_coleira = models.CharField(max_length = 9, primary_key = True)
@@ -18,7 +17,6 @@ class Pet(models.Model):
 
     def __str__(self):
         return f"{self.nome} ({self.especie})"
-
 
 class HistoricoLocalizacao(models.Model):
     # Tabela `historico_localizacao`
@@ -38,6 +36,7 @@ class HistoricoLocalizacao(models.Model):
 
     def __str__(self):
         return f"{self.id_coleira_id} @ {self.data_hora}"
+      
 class PetTutor(models.Model):
     pk = models.CompositePrimaryKey('id_coleira', 'id_tutor')
     id_coleira = models.ForeignKey(Pet, on_delete = models.CASCADE, db_column = 'id_coleira')
