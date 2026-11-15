@@ -1,3 +1,10 @@
 from django.contrib import admin
+from .models import (
+    Pet,
+    HistoricoLocalizacao,
+    Agendamento
+)
 
-# Register your models here.
+admin.site.register(Pet)
+admin.site.register(HistoricoLocalizacao)
+admin.site.register(Agendamento)

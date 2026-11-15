@@ -1,19 +1,15 @@
 from django import forms
-from .models import Cadastro
+from .models import Usuario
+
 
 class CadastroForm(forms.ModelForm):
-    class Meta:
-        model = Cadastro
-        fields = [
-            'nome',
-            'email',
-            'telefone',
-            'senha'
-        ]
-        widgets = {
-            'senha':forms.PasswordInput(),
-        }
+    # Senha entra como texto puro no form e vira hash na view (coluna senha_hash)
+    senha = forms.CharField(max_length = 128, widget = forms.PasswordInput)
 
+    class Meta:
+        model = Usuario
+        fields = ['nome', 'email', 'telefone']
+        # Validação de requisito minimo de senha
     def clean_senha(self):
         senha = self.cleaned_data.get('senha')
         if len(senha) < 8:
