@@ -40,7 +40,7 @@ def editar_perfil(request, id): #Solicita o ID do cadastro do usuario
         
         if form.is_valid():
             form.save()
-            return redirect('perfil_sucesso', id=cadastro.id)
+            return redirect('perfil_sucesso', id=cadastro.id_usuario)
     
     else:
         form = CadastroForm(instance=cadastro)
