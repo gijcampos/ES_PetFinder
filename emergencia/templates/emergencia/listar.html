@@ -1,0 +1,9 @@
+<h1>Contatos de emergência de {{ tutor }}</h1>
+
+<ul>
+  {% for c in contatos %}
+    <li>{{ c.id_contato.nome }}, {{ c.parentesco }}, {{ c.id_contato.telefone }}</li>
+  {% empty %}
+    <li>Nenhum contato cadastrado.</li>
+  {% endfor %}
+</ul>

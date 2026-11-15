@@ -6,4 +6,5 @@ urlpatterns = [
     path('listar/<int:id_tutor>/', views.listar, name='listar_clinicas'),
     path('editar/<int:id_clinica>/', views.editar, name='editar_clinica'),
     path('excluir/<int:id_clinica>/', views.excluir, name='excluir_clinica'),
+    path('<int:id_tutor>/favorita/<int:id_clinica>/', views.favorita, name='favorita'),
 ]
