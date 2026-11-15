@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 from .models import Usuario
 from .forms import CadastroForm
+from django.contrib import messages
 
 # ===== Arquivo que lida com as criações e validações dos formularios =====
 
@@ -27,6 +28,18 @@ def cadastro(request):
 # ===== Tela de Login =====
 
 def login_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        senha = request.POST.get('senha')
+
+        usuario = Usuario.objects.filter(email=email).first()
+
+        if usuario and check_password(senha, usuario.senha_hash):
+            request.session['id_usuario'] = usuario.id_usuario
+            return redirect('listar_pets')
+        else:
+            messages.error(request, 'E-mail ou senha inválidos.')
+
     return render(request, 'usuarios/usuario_login.html')
 
 # ===== Funções de Edição e Exclusão do formulário de Cadastro =====
