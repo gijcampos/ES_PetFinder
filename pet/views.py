@@ -84,6 +84,9 @@ def historico_localizacao(request, id_coleira):
     else:
         data_selecionada = date.today()
 
+    if data_selecionada > date.today():
+        data_selecionada = date.today()
+
     data_anterior = data_selecionada - timedelta(days=1)
     data_proxima = data_selecionada + timedelta(days=1)
 
