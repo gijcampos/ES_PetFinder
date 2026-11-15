@@ -18,7 +18,7 @@ class Clinica(models.Model):
 class HorarioFuncionamento(models.Model):
     # Tabela `horario_funcionamento`
     pk = models.CompositePrimaryKey('id_clinica', 'dia_semana')
-    id_clinica = models.ForeignKey(Clinica, on_delete = models.CASCADE, db_column = 'id_clinica')
+    id_clinica = models.ForeignKey(Clinica, on_delete = models.CASCADE, db_column = 'id_clinica', related_name='horarios')
     dia_semana = models.PositiveSmallIntegerField()
     abre = models.TimeField()
     fecha = models.TimeField()
@@ -26,6 +26,7 @@ class HorarioFuncionamento(models.Model):
     class Meta:
         db_table = 'horario_funcionamento'
         managed = False
+        ordering = ['dia_semana', 'abre']
         constraints = [
             models.CheckConstraint(
                 condition = models.Q(dia_semana__gte = 1, dia_semana__lte = 7),
