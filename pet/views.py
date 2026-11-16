@@ -13,18 +13,25 @@ def listar_pets(request):
 
 # ===== CADASTRO DE PETS =====
 
+from tutor.models import Tutor
+
 def cadastrar_pets(request):
+    id_usuario = request.session.get('id_usuario')
+    if not id_usuario:
+        return redirect('tutor:login')
+    tutor = get_object_or_404(Tutor, pk=id_usuario)
+
     if request.method == 'POST':
-        form = PetsForm(request.POST)
+        form = PetsForm(request.POST, tutor=tutor)
 
         if form.is_valid():
             form.save()
-            return redirect("listar_pets")
-
+            return redirect('listar_pets')
     else:
-        form = PetsForm()
-    return render(request, 'pet/cadastrar_pets.html', {'form': form})
+        form = PetsForm(tutor=tutor)
 
+    return render(request, 'pet/cadastro_pet.html', {'form': form})
+    
 # ===== EDIÇÃO DE PETS =====
 
 def editar_pets(request, id):

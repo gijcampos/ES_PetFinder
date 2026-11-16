@@ -9,14 +9,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <!-- CSS renomeado e vinculado com a tag static do Django -->
-  <link rel="stylesheet" href="{% static 'pet.css' %}">
+  <link rel="stylesheet" href="{% static 'css/pet.css' %}">
 </head>
 <body>
   <header>
     <!-- URL ajustada para a rota de listagem de pets configurada no urls.py -->
     <a href="{% url 'listar_pets' %}" aria-label="PetFinder - voltar ao início">
       <!-- Imagem vinculada com a tag static -->
-      <img class="logo" src="{% static 'PetFinder-Logo.png' %}" alt="PetFinder - Coleira inteligente"
+      <img class="logo" src="{% static 'img/PetFinder-Logo.png' %}" ...>
            onerror="this.style.display='none'">
     </a>
   </header>
@@ -26,7 +26,7 @@
       <h1>Cadastre seu pet!</h1>
 
       <!-- Método POST e action apontando para a sua view adicionados -->
-      <form id="form-pet" method="POST" action="{% url 'cadastrar_pet' %}">
+      <form id="form-pet" method="POST" action="{% url 'cadastrar_pets' %}">
         {% csrf_token %}
         <div class="grade">
           <div class="nome">
@@ -58,7 +58,7 @@
             <div class="campo-prefixo">
               <span aria-hidden="true">#</span>
               <!-- Nome e ID alterados para bater com o models.py -->
-              <input id="id_disp_rastreamento" name="id_disp_rastreamento" type="text" autocomplete="off" required>
+              <input id="id_disp_rastreamento" name="id_coleira" type="text" autocomplete="off" required>
             </div>
           </div>
 
@@ -67,7 +67,7 @@
             <textarea id="obs" name="obs" rows="1"></textarea>
           </div>
         </div>
-
+        {{ form.errors }}
         <p class="status" id="status" role="status"></p>
 
         <div class="rodape">
@@ -82,6 +82,6 @@
   </main>
 
   <!-- Chamada para o arquivo JS isolado -->
-  <script src="{% static 'pet.js' %}"></script>
+  <script src="{% static 'js/pet.js' %}"></script>
 </body>
 </html>

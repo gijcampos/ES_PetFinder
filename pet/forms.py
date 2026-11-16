@@ -1,16 +1,18 @@
 from django import forms
-from tutor.models import Tutor
 from .models import Pet, PetTutor
 
-class PetsForm(forms.ModelForm):
-    tutor = forms.ModelChoiceField(queryset = Tutor.objects.all())
 
+class PetsForm(forms.ModelForm):
     class Meta:
         model = Pet
         fields = ['id_coleira', 'nome', 'especie', 'raca', 'idade']
 
-    def save(self, commit = True):
+    def __init__(self, *args, tutor=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.tutor = tutor
+
+    def save(self, commit=True):
         pet = super().save(commit)
-        if commit:
-            PetTutor.objects.get_or_create(id_coleira = pet, id_tutor = self.cleaned_data['tutor'])
+        if commit and self.tutor is not None:
+            PetTutor.objects.get_or_create(id_coleira=pet, id_tutor=self.tutor)
         return pet
