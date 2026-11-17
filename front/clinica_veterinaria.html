@@ -27,7 +27,11 @@
           <input id="texto-busca" type="search" placeholder="Busque o nome da clínica veterinária"
                  aria-label="Buscar clínica veterinária" autocomplete="off">
         </form>
-        <div id="mapa" class="mapa" aria-label="Mapa das clínicas veterinárias"></div>
+        <div id="mapa" class="mapa" aria-label="Mapa das clínicas veterinárias">
+          <div id="palco" class="palco">
+            <img class="mapa-img" src="mapa-simulado.svg" alt="" draggable="false">
+          </div>
+        </div>
       </div>
 
       <ul id="lista" class="lista" aria-live="polite"></ul>
@@ -35,8 +39,6 @@
   </main>
 
   <script src="clinicas.js"></script>
-  <!-- Em Django, use: key={{ GOOGLE_MAPS_API_KEY }} -->
-  <script async
-    src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_AQUI&loading=async&callback=iniciarMapa&language=pt-BR&region=BR"></script>
+ 
 </body>
 </html>
