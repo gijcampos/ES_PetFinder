@@ -26,7 +26,7 @@ def notificar_contatos_emergencia(pet, tutor, ultima_localizacao, distancia_metr
             f"Nome do pet: {pet.nome}\n"
             f"ID do pet: {pet.id_coleira}\n"
             f"Última localização: {link_mapa}\n"
-            f"Contato do tutor ({tutor.id_usuario.nome}): {telefone_tutor} | {tutor.id_usuario.email}\n\n"
+            f"Contato do tutor ({tutor.id_tutor.nome}): {telefone_tutor} | {tutor.id_tutor.email}\n\n"
             f"Saiu do endereço favoritado, ele está a mais de {int(distancia_metros)}m do raio da residência!\n"
             f"Fique atento(a), e qualquer coisa retorne à casa para encontrá-lo!"
         )
