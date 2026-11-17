@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
-from .models import Usuario
+from .models import Usuario, Tutor
+from pet.models import PetTutor
+from pet.services import obter_status_tempo_real_pet
 from .forms import CadastroForm
 from django.contrib import messages
 
@@ -36,7 +38,7 @@ def login_view(request):
 
         if usuario and check_password(senha, usuario.senha_hash):
             request.session['id_usuario'] = usuario.id_usuario
-            return redirect('listar_pets')
+            return redirect('ambiente_tutor')
         else:
             messages.error(request, 'E-mail ou senha inválidos.')
 
@@ -75,3 +77,34 @@ def excluir_perfil(request, id):
     return render(
         request, 'usuarios/<excluir_perfil.html>', {'cadastro': cadastro}
     )
+
+# ===== AMBIENTE PRINCIPAL DO SITE =====
+
+def ambiente_tutor(request):
+    id_usuario = request.session.get('id_usuario')
+    if not id_usuario:
+        return redirect('login')
+
+    usuario = get_object_or_404(Usuario, pk=id_usuario)
+    tutor = Tutor.objects.filter(pk=id_usuario).first()
+
+    pets = []
+    pet_inicial = None
+    if tutor:
+        vinculos = PetTutor.objects.filter(id_tutor=tutor).select_related('id_coleira')
+        pets = [v.id_coleira for v in vinculos]
+        pet_inicial = obter_status_tempo_real_pet(pets[0], tutor=tutor) if pets else None
+
+    return render(request, 'usuarios/ambiente_tutor.html', {
+        'usuario': usuario,
+        'tutor': tutor,
+        'nome_tutor': usuario.nome,
+        'pets': pets,
+        'pet_inicial': pet_inicial,
+    })
+
+# ===== CAMPO DE LOGOUT =====
+
+def sair(request):
+    request.session.flush()
+    return redirect('login')
