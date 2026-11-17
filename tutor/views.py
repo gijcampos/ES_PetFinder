@@ -79,12 +79,8 @@ def excluir_perfil(request, id):
 
 # ===== MODO FORA DA CIDADE =====
 
-def alternar_modo_fora_cidade(request):
-    id_usuario = request.session.get('id_usuario')
-    if not id_usuario:
-        return redirect('login')
-
-    tutor = get_object_or_404(Tutor, pk=id_usuario)
+def alternar_modo_fora_cidade(request, id_tutor):
+    tutor = get_object_or_404(Tutor, pk=id_tutor)
 
     # Se o tutor está tentando ATIVAR o modo agora
     if not tutor.modo_fora_cidade:
