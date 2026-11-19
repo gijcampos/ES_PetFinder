@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
 from .models import Usuario, Tutor
+from pet.models import PetTutor
+from pet.services import obter_status_tempo_real_pet
 from .forms import CadastroForm
 from django.contrib import messages
 from emergencia.models import ContatoEmergencia
@@ -37,7 +39,7 @@ def login_view(request):
 
         if usuario and check_password(senha, usuario.senha_hash):
             request.session['id_usuario'] = usuario.id_usuario
-            return redirect('listar_pets')
+            return redirect('ambiente_tutor')
         else:
             messages.error(request, 'E-mail ou senha inválidos.')
 
@@ -77,25 +79,33 @@ def excluir_perfil(request, id):
         request, 'usuarios/<excluir_perfil.html>', {'cadastro': cadastro}
     )
 
-# ===== MODO FORA DA CIDADE =====
+# ===== AMBIENTE PRINCIPAL DO SITE =====
 
-def alternar_modo_fora_cidade(request, id_tutor):
-    tutor = get_object_or_404(Tutor, pk=id_tutor)
+def ambiente_tutor(request):
+    id_usuario = request.session.get('id_usuario')
+    if not id_usuario:
+        return redirect('login')
 
-    # Se o tutor está tentando ATIVAR o modo agora
-    if not tutor.modo_fora_cidade:
-        tem_contato = ContatoEmergencia.objects.filter(id_tutor=tutor).exists()
-        if not tem_contato:
-            messages.warning(
-                request,
-                "Você precisa cadastrar pelo menos um contato de emergência antes de ativar o modo 'Fora da cidade'."
-            )
-            return redirect('cadastro_emergencia', id_tutor=tutor.pk)
+    usuario = get_object_or_404(Usuario, pk=id_usuario)
+    tutor = Tutor.objects.filter(pk=id_usuario).first()
 
-    # Alterna (ativa se estava False, desativa se estava True)
-    tutor.modo_fora_cidade = not tutor.modo_fora_cidade
-    tutor.save()
+    pets = []
+    pet_inicial = None
+    if tutor:
+        vinculos = PetTutor.objects.filter(id_tutor=tutor).select_related('id_coleira')
+        pets = [v.id_coleira for v in vinculos]
+        pet_inicial = obter_status_tempo_real_pet(pets[0], tutor=tutor) if pets else None
 
-    status = "ativado" if tutor.modo_fora_cidade else "desativado"
-    messages.success(request, f"Modo 'Fora da cidade' {status} com sucesso!")
-    return redirect('listar_pets')  # --> Colocar uma Rota HTML que faça mais sentido.
+    return render(request, 'usuarios/ambiente_tutor.html', {
+        'usuario': usuario,
+        'tutor': tutor,
+        'nome_tutor': usuario.nome,
+        'pets': pets,
+        'pet_inicial': pet_inicial,
+    })
+
+# ===== CAMPO DE LOGOUT =====
+
+def sair(request):
+    request.session.flush()
+    return redirect('login')

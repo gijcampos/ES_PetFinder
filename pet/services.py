@@ -2,6 +2,7 @@ import math
 from datetime import date
 from .models import HistoricoLocalizacao, PetTutor
 from endereco.models import Endereco
+from django.utils import timezone
 
 RAIO_SEGURO_PADRAO_METROS = 100
 
@@ -114,4 +115,57 @@ def obter_historico_diario(pet, data_consulta: date, tutor=None, raio_seguro_met
             "longitude": float(endereco_base.longitude) if endereco_base else None,
             "raio_metros": raio_seguro_metros,
         }
+    }
+
+def obter_status_tempo_real_pet(pet, tutor=None, raio_seguro_metros: int = 10):
+    endereco_base = obter_endereco_base_pet(pet, tutor=tutor)
+    ultima_loc = HistoricoLocalizacao.objects.filter(id_coleira=pet).order_by('-data_hora').first()
+
+    endereco_info = None
+    if endereco_base:
+        num = endereco_base.numero if endereco_base.numero else "S/N"
+        endereco_info = {
+            "latitude": float(endereco_base.latitude),
+            "longitude": float(endereco_base.longitude),
+            "raio_metros": raio_seguro_metros,
+            "texto": f"{endereco_base.logradouro}, {num} - {endereco_base.bairro}, {endereco_base.cidade} - {endereco_base.estado}",
+        }
+
+    if not ultima_loc:
+        return {
+            "id_coleira": pet.id_coleira,
+            "nome": pet.nome,
+            "tem_localizacao": False,
+            "ao_vivo": False,
+            "endereco": endereco_info,
+        }
+
+    agora = timezone.now()
+    segundos_atras = max(0, int((agora - ultima_loc.data_hora).total_seconds()))
+    # Considera "Ao vivo" se enviou sinal nos últimos 5 minutos (300s)
+    ao_vivo = segundos_atras <= 300
+
+    distancia = None
+    dentro_raio = None
+    if endereco_base:
+        distancia = calcular_distancia_metros(
+            endereco_base.latitude,
+            endereco_base.longitude,
+            ultima_loc.latitude,
+            ultima_loc.longitude,
+        )
+        dentro_raio = distancia <= raio_seguro_metros
+
+    return {
+        "id_coleira": pet.id_coleira,
+        "nome": pet.nome,
+        "tem_localizacao": True,
+        "ao_vivo": ao_vivo,
+        "segundos_atras": segundos_atras,
+        "ultima_atualizacao": ultima_loc.data_hora.strftime("%d/%m/%Y às %H:%M"),
+        "latitude": float(ultima_loc.latitude),
+        "longitude": float(ultima_loc.longitude),
+        "distancia_metros": distancia,
+        "dentro_raio": dentro_raio,
+        "endereco": endereco_info,
     }

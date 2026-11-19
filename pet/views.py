@@ -3,7 +3,8 @@ from .models import Pet, PetTutor
 from .forms import PetsForm
 from datetime import date, datetime, timedelta
 from django.contrib import messages
-from .services import obter_historico_diario
+from .services import obter_historico_diario, obter_status_tempo_real_pet
+from django.http import JsonResponse
 
 # ===== LISTAR PETS =====
 
@@ -112,3 +113,24 @@ def historico_localizacao(request, id_coleira):
 
     # O pessoal do front-end vai criar/editar este arquivo HTML:
     return render(request, "pet/", context) # --> COLOCAR ROTA HTML DA TELA DO HISTORICO DE LOCALIZAÇAO
+
+# ===== TELA INICIAL + API EM TEMPO REAL =====
+
+def tela_inicial_tutor(request, id_tutor):
+    vinculos = PetTutor.objects.filter(id_tutor=id_tutor).select_related('id_coleira')
+    
+    pets = [v.id_coleira for v in vinculos]
+    pet_inicial = obter_status_tempo_real_pet(pets[0]) if pets else None
+
+    return render(request, 'home_tutor.html', {
+        'pets': pets,
+        'pet_inicial': pet_inicial,
+        'id_tutor': id_tutor,
+    })
+
+def api_localizacao_tempo_real(request, id_coleira):
+    pet = get_object_or_404(Pet, pk=id_coleira)
+    
+    dados = obter_status_tempo_real_pet(pet)
+
+    return JsonResponse(dados)
