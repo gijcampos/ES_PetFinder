@@ -8,4 +8,5 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('editar/<int:id>/', views.editar_perfil, name='editar_perfil'),
     path('excluir/<int:id>/', views.excluir_perfil, name='excluir_perfil'),
+    path('modo_fora_cidade/<int:id_tutor>/', views.alternar_modo_fora_cidade, name='alternar_modo_fora_cidade'),
 ]

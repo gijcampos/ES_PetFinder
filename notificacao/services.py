@@ -3,7 +3,8 @@ from django.core.mail import send_mail
 from django.utils import timezone
 from datetime import timedelta
 from .models import Notificacao
-from pet.models import HistoricoLocalizacao
+from pet.models import HistoricoLocalizacao, PetTutor
+from emergencia.services import notificar_contatos_emergencia
 
 def calcular_distancia_metros(lat1, lon1, lat2, lon2):
     """Calcula a distância em metros entre duas coordenadas geográficas."""
@@ -119,6 +120,15 @@ def processar_monitoramento_pet(pet, tutor, endereco_tutor_lat, endereco_tutor_l
                 mensagem=f"Pet {pet.nome} saiu do raio de 10m.",
                 lida=False
             )
+
+            # --- NOTIFICAR CONTATO DE EMERGÊNCIA ---
+            if tutor.modo_fora_cidade:
+                notificar_contatos_emergencia(
+                    pet=pet,
+                    tutor=tutor,
+                    ultima_localizacao=historico_recente,
+                    distancia_metros=distancia
+                )
 
     # CASO B: PET RETORNOU PARA O RAIO SEGURO (<= 10 metros)
     elif distancia <= 10 and estava_fora:
