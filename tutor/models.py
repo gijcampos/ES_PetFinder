@@ -27,6 +27,7 @@ class Tutor(models.Model):
         primary_key=True,
         db_column='id_tutor',
     )
+    modo_fora_cidade = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'tutor'

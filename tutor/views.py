@@ -5,6 +5,7 @@ from pet.models import PetTutor
 from pet.services import obter_status_tempo_real_pet
 from .forms import CadastroForm
 from django.contrib import messages
+from emergencia.models import ContatoEmergencia
 
 # ===== Arquivo que lida com as criações e validações dos formularios =====
 
