@@ -5,6 +5,7 @@ from pet.models import PetTutor
 from pet.services import obter_status_tempo_real_pet
 from .forms import CadastroForm
 from django.contrib import messages
+from emergencia.models import ContatoEmergencia
 
 # ===== Arquivo que lida com as criações e validações dos formularios =====
 
@@ -77,6 +78,28 @@ def excluir_perfil(request, id):
     return render(
         request, 'usuarios/<excluir_perfil.html>', {'cadastro': cadastro}
     )
+
+# ===== ALTERNAR MODO FORA DA CIDADE =====
+
+def alternar_modo_fora_cidade(request, id_tutor):
+    tutor = get_object_or_404(Tutor, pk=id_tutor)
+
+    if not tutor.modo_fora_cidade:
+        tem_contato = ContatoEmergencia.objects.filter(id_tutor=tutor).exists()
+    if not tem_contato:
+        messages.warning(
+            request,
+            "Você precisa cadastrar pelo menos um contato de emergência antes de ativar o modo 'Fora da cidade'."
+        )
+        return redirect('cadastro_emergencia', id_tutor=tutor.pk)
+    
+    tutor.modo_fora_cidade = not tutor.modo_fora_cidade
+    tutor.save()
+
+    status = "ativado" if tutor.modo_fora_cidade else "desativado"
+    messages.success(request, f"Modo 'Fora da cidade' {status} com sucesso!")
+    
+    return redirect('listar_pets')  # --> Colocar uma Rota HTML que faça mais sentido.
 
 # ===== AMBIENTE PRINCIPAL DO SITE =====
 
