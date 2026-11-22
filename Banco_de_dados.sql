@@ -27,6 +27,7 @@ CREATE TABLE usuario (
 
 CREATE TABLE tutor (
   id_tutor INT PRIMARY KEY,
+  modo_fora_cidade BOOLEAN NOT NULL DEFAULT FALSE,
   FOREIGN KEY (id_tutor) REFERENCES usuario(id_usuario) ON DELETE CASCADE
 );
 
