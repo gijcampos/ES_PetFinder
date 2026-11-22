@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,15 +7,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-  <!-- CSS renomeado e vinculado com a tag static do Django -->
-  <link rel="stylesheet" href="{% static 'pet.css' %}">
+  <link rel="stylesheet" href="style2.css">
 </head>
 <body>
   <header>
-    <!-- URL ajustada para a rota de listagem de pets configurada no urls.py -->
-    <a href="{% url 'listar_pets' %}" aria-label="PetFinder - voltar ao início">
-      <!-- Imagem vinculada com a tag static -->
-      <img class="logo" src="{% static 'PetFinder-Logo.png' %}" alt="PetFinder - Coleira inteligente"
+    <a href="login.html" aria-label="PetFinder - voltar ao início">
+      <img class="logo" src="PetFinder-Logo.png" alt="PetFinder - Coleira inteligente"
            onerror="this.style.display='none'">
     </a>
   </header>
@@ -25,9 +21,7 @@
     <section class="cartao">
       <h1>Cadastre seu pet!</h1>
 
-      <!-- Método POST e action apontando para a sua view adicionados -->
-      <form id="form-pet" method="POST" action="{% url 'cadastrar_pet' %}">
-        {% csrf_token %}
+      <form id="form-pet">
         <div class="grade">
           <div class="nome">
             <label for="nome">Nome*</label>
@@ -36,7 +30,7 @@
 
           <div class="idade">
             <label for="idade">Idade*</label>
-            <input id="idade" name="idade" type="number" autocomplete="off" required>
+            <input id="idade" name="idade" type="text" autocomplete="off" required>
           </div>
 
           <div class="especie">
@@ -54,11 +48,10 @@
           </div>
 
           <div class="coleira">
-            <label for="id_disp_rastreamento">ID da coleira*</label>
+            <label for="coleira">ID da coleira*</label>
             <div class="campo-prefixo">
               <span aria-hidden="true">#</span>
-              <!-- Nome e ID alterados para bater com o models.py -->
-              <input id="id_disp_rastreamento" name="id_disp_rastreamento" type="text" autocomplete="off" required>
+              <input id="coleira" name="coleira" type="text" autocomplete="off" required>
             </div>
           </div>
 
@@ -81,7 +74,32 @@
     </section>
   </main>
 
-  <!-- Chamada para o arquivo JS isolado -->
-  <script src="{% static 'pet.js' %}"></script>
+  <script>
+    const form = document.getElementById("form-pet");
+    const status = document.getElementById("status");
+
+    const coleira = document.getElementById("coleira");
+    coleira.addEventListener("input", () => {
+      coleira.value = coleira.value.replace(/^#+/, "");
+    });
+
+    document.getElementById("cancelar").addEventListener("click", () => {
+      form.reset();
+      status.textContent = "";
+      if (history.length > 1) history.back();
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault(); 
+
+      const pet = Object.fromEntries(new FormData(form).entries());
+      Object.keys(pet).forEach((k) => (pet[k] = pet[k].trim()));
+
+      console.log("Pet para salvar:", pet);
+
+      status.textContent = "Pet cadastrado com sucesso!";
+      form.reset();
+    });
+  </script>
 </body>
 </html>
