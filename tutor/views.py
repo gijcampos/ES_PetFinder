@@ -39,11 +39,11 @@ def login_view(request):
 
         if usuario and check_password(senha, usuario.senha_hash):
             request.session['id_usuario'] = usuario.id_usuario
-            return redirect('ambiente_tutor')
+            return redirect('core:index')
         else:
             messages.error(request, 'E-mail ou senha inválidos.')
 
-    return render(request, 'usuarios/usuario_login.html')
+    return render(request, 'tutor/login.html')
 
 # ===== Funções de Edição e Exclusão do formulário de Cadastro =====
 
@@ -106,7 +106,7 @@ def alternar_modo_fora_cidade(request, id_tutor):
 def ambiente_tutor(request):
     id_usuario = request.session.get('id_usuario')
     if not id_usuario:
-        return redirect('login')
+        return redirect('tutor:login')
 
     usuario = get_object_or_404(Usuario, pk=id_usuario)
     tutor = Tutor.objects.filter(pk=id_usuario).first()
@@ -130,4 +130,4 @@ def ambiente_tutor(request):
 
 def sair(request):
     request.session.flush()
-    return redirect('login')
+    return redirect('tutor:login')

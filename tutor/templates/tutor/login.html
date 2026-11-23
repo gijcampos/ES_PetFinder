@@ -1,5 +1,5 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -34,7 +34,7 @@
     </form>
 
     <!-- Redirecionamento utilizando o nome da rota definida no urls.py -->
-    <a class="cadastro" href="{% url 'cadastro' %}">Novo cadastro</a>
+  <a class="cadastro" href="{% url 'tutor:cadastro' %}">Novo cadastro</a>
   </main>
 
   <!-- Carregamento do JavaScript estático -->
