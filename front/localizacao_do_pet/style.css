@@ -28,10 +28,12 @@ body {
 header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   padding: 16px 40px;
   background-color: var(--branco);
-  background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27160%27%20height%3D%27120%27%3E%3Cg%20fill%3D%27%23f6e6e6%27%3E%3Cellipse%20cx%3D%2740%27%20cy%3D%2762%27%20rx%3D%2713%27%20ry%3D%2711%27/%3E%3Ccircle%20cx%3D%2722%27%20cy%3D%2746%27%20r%3D%275%27/%3E%3Ccircle%20cx%3D%2734%27%20cy%3D%2738%27%20r%3D%275%27/%3E%3Ccircle%20cx%3D%2747%27%20cy%3D%2738%27%20r%3D%275%27/%3E%3Ccircle%20cx%3D%2758%27%20cy%3D%2746%27%20r%3D%275%27/%3E%3Cellipse%20cx%3D%27120%27%20cy%3D%27100%27%20rx%3D%279%27%20ry%3D%277%27/%3E%3Ccircle%20cx%3D%27108%27%20cy%3D%2790%27%20r%3D%273.5%27/%3E%3Ccircle%20cx%3D%27116%27%20cy%3D%2785%27%20r%3D%273.5%27/%3E%3Ccircle%20cx%3D%27125%27%20cy%3D%2785%27%20r%3D%273.5%27/%3E%3Ccircle%20cx%3D%27132%27%20cy%3D%2790%27%20r%3D%273.5%27/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 160px 120px;
+  background-image: url("pagina-patinhas-clara.png");
+  background-size: cover;
 }
 .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
 .brand svg { width: 64px; height: 64px; }
