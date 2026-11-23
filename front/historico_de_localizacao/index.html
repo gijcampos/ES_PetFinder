@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Histórico de localização | PetFinder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <a class="brand" href="#" aria-label="PetFinder - Coleira inteligente">
+    <!-- Troque este SVG pela sua logo: <img class="logo" src="..." alt="PetFinder"> -->
+    <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#033960"/><path d="M32 1a31 31 0 0 1 0 62z" fill="#d08a86"/><ellipse cx="32" cy="40" rx="11" ry="9" fill="#fff"/><circle cx="18" cy="30" r="4.5" fill="#fff"/><circle cx="27" cy="22" r="4.5" fill="#fff"/><circle cx="37" cy="22" r="4.5" fill="#fff"/><circle cx="46" cy="30" r="4.5" fill="#fff"/></svg>
+    <span><b>PETFINDER</b><small>COLEIRA INTELIGENTE</small></span>
+  </a>
+  <a class="btn-voltar" id="voltar" href="ambiente.html">&larr; Voltar ao ambiente</a>
+</header>
+
+<main>
+  <section class="cartao" aria-labelledby="titulo">
+    <h1 id="titulo">Histórico de localização</h1>
+
+    <div class="layout">
+      <div class="esq">
+        <div class="barra">
+          <div class="pet" id="pet"></div>
+          <div class="nav-data">
+            <button type="button" class="seta" id="ant" aria-label="Dia anterior">&lt;</button>
+            <div class="data-wrap">
+              <button type="button" class="data" id="data-btn" aria-label="Escolher outra data"></button>
+              <input type="date" id="data-nativa" tabindex="-1" aria-hidden="true">
+            </div>
+            <button type="button" class="seta" id="prox" aria-label="Próximo dia">&gt;</button>
+          </div>
+        </div>
+        <div class="mapa-wrap">
+          <div id="mapa" role="img" aria-label="Mapa ilustrativo com a trajetória do animal no dia escolhido"></div>
+          <p class="mapa-msg" id="mapa-msg" hidden></p>
+        </div>
+      </div>
+
+      <div class="painel-wrap">
+        <aside class="painel" aria-label="Resumo e linha do tempo">
+          <div class="stats">
+            <div class="stat"><b id="n-reg">0</b><span>Registros no dia</span></div>
+            <div class="stat" id="stat-saida"><b id="n-saida">0</b><span id="l-saida">Saída do raio</span></div>
+          </div>
+          <h2>Linha do tempo</h2>
+          <div class="timeline" id="timeline" aria-live="polite"></div>
+          <p class="nota" id="nota"></p>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
