@@ -24,7 +24,7 @@ def cadastro(request, id_tutor):
     else:
         form = ClinicaForm()
         
-    return render(request, 'clinica/', {'form': form, 'tutor': tutor}) # --> COLOCAR UMA ROTA HTML PARA TELA DE CADASTRO
+    return render(request, 'clinica/cadastro_clinica.html', {'form': form, 'tutor': tutor}) # --> COLOCAR UMA ROTA HTML PARA TELA DE CADASTRO
 
 # ===== LISTAGEM DAS CLINICAS =====
 
@@ -78,7 +78,7 @@ def editar(request, id_tutor, id_clinica):
     else:
         form = ClinicaForm(instance=clinica)
         
-    return render(request, 'clinica/', {'form': form, 'clinica': clinica}) # --> COLOCAR UMA ROTA HTML PARA A EDIÇÃO DA CLINICA
+    return render(request, 'clinica/editar_clinica.html', {'form': form, 'clinica': clinica}) # --> COLOCAR UMA ROTA HTML PARA A EDIÇÃO DA CLINICA
 
 # ===== EXCLUSÃO =====
 
