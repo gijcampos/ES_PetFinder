@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -61,7 +62,7 @@
 </head>
 <body>
   <header class="topo">
-    <img class="logo" src="PetFinder-Logo.png" alt="PetFinder - Coleira inteligente" onerror="this.style.display='none'">
+    <img class="logo" src="{% static 'core/img/PetFinder-Logo.png' %}" alt="PetFinder">
   </header>
 
   <main class="pagina">
@@ -88,21 +89,21 @@
         <a class="atalho" href="meu_perfil.html" data-repassar-id>
           <strong>Meu perfil</strong><span>Editar seus dados</span>
         </a>
-        <div class="atalho breve" aria-disabled="true">
-          <strong>Pets</strong><span>Cadastre e gerencie seus pets</span><em class="selo">Em breve</em>
-        </div>
-        <div class="atalho breve" aria-disabled="true">
-          <strong>Endereço</strong><span>O ponto central do monitoramento</span><em class="selo">Em breve</em>
-        </div>
-        <div class="atalho breve" aria-disabled="true">
-          <strong>Contatos de emergência</strong><span>Quem avisamos se você não puder</span><em class="selo">Em breve</em>
-        </div>
-        <div class="atalho breve" aria-disabled="true">
-          <strong>Clínica veterinária</strong><span>Sua clínica de preferência</span><em class="selo">Em breve</em>
-        </div>
-        <div class="atalho breve" aria-disabled="true">
-          <strong>Agendamentos</strong><span>Consultas e atendimentos</span><em class="selo">Em breve</em>
-        </div>
+        <a class="atalho" href="{% url 'listar_pets' %}">
+          <strong>Pets</strong><span>Cadastre e gerencie seus pets</span>
+        </a>
+        <a class="atalho" href="{% url 'cadastrar' %}">
+          <strong>Endereço</strong><span>O ponto central do monitoramento</span>
+        </a>
+        <a class="atalho" href="{% url 'listar_emergencia' usuario.id_usuario %}">
+          <strong>Contatos de emergência</strong><span>Quem avisamos se você não puder</span>
+        </a>
+        <a class="atalho" href="{% url 'listar_clinicas' usuario.id_usuario %}">
+          <strong>Clínica veterinária</strong><span>Sua clínica de preferência</span>
+        </a>
+        <a class="atalho" href="{% url 'criar_agendamento' %}">
+          <strong>Agendamentos</strong><span>Consultas e atendimentos</span>
+        </a>
         <div class="atalho breve" aria-disabled="true">
           <strong>Histórico de localização</strong><span>O trajeto diário do seu pet</span><em class="selo">Em breve</em>
         </div>
@@ -113,7 +114,6 @@
     </div>
   </main>
 
-  <script src="cadastro_de_tutor/demo.js"></script>
   <script>
     if (typeof Demo === "undefined") {
       alert("Não foi possível carregar o arquivo cadastro_de_tutor/demo.js. Confira se ele está nessa pasta, dentro de front.");
@@ -144,5 +144,5 @@
       location.href = "tela_login.html";
     });
   </script>
-</body
+</body>
 </html>

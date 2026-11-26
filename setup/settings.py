@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'notificacao',
     'clinica',
     'agendamento',
+    'core'
 ]
 
 MIDDLEWARE = [
@@ -146,3 +147,6 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+LOGIN_URL = "/tutor/login/"
+LOGIN_REDIRECT_URL = "/"
