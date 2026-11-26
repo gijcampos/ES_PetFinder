@@ -129,3 +129,8 @@ CREATE TABLE pet_tutor (
   FOREIGN KEY (id_coleira) REFERENCES pet(id_coleira) ON DELETE CASCADE,
   FOREIGN KEY (id_tutor)   REFERENCES tutor(id_tutor) ON DELETE CASCADE
 );
+
+INSERT INTO usuario (nome, email, telefone, senha_hash)
+VALUES ('Tutor Teste', 'tutor@teste.com', '43999999999',
+        'pbkdf2_sha256$1500000$petfinderteste$qoaoyno1WS2Z1MRb3U/njpfICUb7WFSBjZ8ga3NEigQ=');
+INSERT INTO tutor (id_tutor) VALUES (LAST_INSERT_ID());
