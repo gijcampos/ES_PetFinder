@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PetFinder | Cadastro de endereço</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --azul: #033960; --cartao: #9a757d; --campo: #d9d9d9; --branco: #fff;
+      --verde: #2e8b1f; --vermelho: #cc0000;
+      --fonte-titulo: "Montserrat", sans-serif; --fonte-texto: "Quicksand", sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    [hidden] { display: none !important; }
+    body { min-height: 100vh; display: flex; flex-direction: column; font-family: var(--fonte-texto); background: var(--azul); color: var(--branco); }
+
+    .topo { padding: 16px 40px; background-color: var(--branco); background-image: url("pagina-patinhas-clara.png"); background-size: cover; }
+    .logo { display: block; height: 130px; width: auto; }
+
+    .pagina { flex: 1; padding: 16px 22px 28px; }
+    .cartao { padding: 18px 40px 22px; background: var(--cartao); border-radius: 28px; }
+    .titulo { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; margin-bottom: 14px; }
+    h1 { font: 400 clamp(2rem, 5vw, 3.4rem)/1.1 var(--fonte-titulo); }
+
+    .colunas { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 48px; align-items: start; }
+    .grupo { margin-bottom: 8px; }
+    label { display: block; margin-bottom: 3px; font-size: 1.1rem; font-weight: 500; }
+    .entrada { width: 100%; height: 42px; padding: 0 14px; font: 400 1.1rem var(--fonte-titulo); color: #000; background: var(--campo); border: 3px solid transparent; border-radius: 6px; }
+    .entrada::placeholder { color: #555; }
+    .entrada:disabled { color: #000; -webkit-text-fill-color: #000; opacity: 1; }
+    .entrada.invalido { border-color: #d40000 !important; }
+    .entrada:focus-visible { outline: 3px solid var(--branco); outline-offset: 2px; }
+    .erro-campo { min-height: 1.1em; margin-top: 2px; font-size: 0.8rem; }
+
+    .acoes-vista { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 10px; }
+    .rodape { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; margin-top: 18px; }
+    .obrigatorio { font-size: 0.9rem; }
+    .botoes { display: flex; justify-content: center; gap: 36px; }
+    .botao { display: inline-flex; align-items: center; justify-content: center; min-width: 140px; height: 40px; padding: 0 20px; font: 500 1rem var(--fonte-titulo); color: var(--branco); text-decoration: none; border: 0; border-radius: 999px; cursor: pointer; }
+    .verde { background: var(--verde); }
+    .vermelho { background: var(--vermelho); }
+    .cinza { background: #b3b3b3; color: #222; font-weight: 400; min-width: 260px; }
+    .botao:hover { filter: brightness(0.9); }
+    .botao:disabled { opacity: .6; cursor: wait; }
+    .botao:focus-visible { outline: 3px solid var(--branco); outline-offset: 3px; }
+
+    .fundo-modal { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: 16px; background: rgba(255, 120, 120, 0.45); }
+    .modal { position: relative; width: min(460px, 100%); padding: 24px 24px 28px; text-align: center; color: #000; background: var(--branco); border: 1px solid #000; border-radius: 40px; }
+    .modal h2 { font: 400 2.2rem var(--fonte-titulo); }
+    .modal p { margin-top: 6px; font: 400 1.5rem/1.2 var(--fonte-titulo); }
+    .modal.pequeno p { font-size: 1.1rem; }
+    .modal .botoes { margin-top: 12px; gap: 28px; }
+    .modal .botao { min-width: 92px; height: 38px; }
+    .modal .botao:focus-visible, .fechar:focus-visible { outline-color: var(--azul); }
+    .fechar { position: absolute; top: 8px; right: 12px; display: grid; place-items: center; width: 44px; height: 44px; font: 400 1.6rem var(--fonte-titulo); color: var(--branco); background: #b52a2a; border: 1px solid #000; border-radius: 50%; cursor: pointer; }
+
+    @media (max-width: 860px) {
+      .cartao { padding: 18px 20px 22px; }
+      .colunas { grid-template-columns: 1fr; }
+      .rodape { grid-template-columns: 1fr; justify-items: center; }
+      .obrigatorio { justify-self: start; order: 2; }
+      .botoes { flex-wrap: wrap; gap: 16px; }
+      .logo { height: 90px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topo">
+    <img class="logo" src="PetFinder-Logo.png" alt="PetFinder - Coleira inteligente" onerror="this.style.display='none'">
+  </header>
+
+  <main class="pagina">
+    <section class="cartao" aria-labelledby="titulo">
+      <div class="titulo">
+        <h1 id="titulo">CADASTRO DE ENDEREÇO</h1>
+        <a class="botao cinza" id="voltar" href="ambiente_usuario.html">voltar para meu ambiente</a>
+      </div>
+
+      <form id="form-endereco" novalidate>
+        <div class="colunas">
+          <div>
+            <div class="grupo">
+              <label for="cep">CEP*</label>
+              <input class="entrada" id="cep" name="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="postal-code" aria-required="true" aria-describedby="erro-cep">
+              <p class="erro-campo" id="erro-cep" role="alert"></p>
+            </div>
+            <div class="grupo">
+              <label for="rua">Rua | Logradouro*</label>
+              <input class="entrada" id="rua" name="rua" autocomplete="address-line1" aria-required="true" aria-describedby="erro-rua">
+              <p class="erro-campo" id="erro-rua" role="alert"></p>
+            </div>
+            <div class="grupo">
+              <label for="numero">Número*</label>
+              <input class="entrada" id="numero" name="numero" maxlength="10" aria-required="true" aria-describedby="erro-numero">
+              <p class="erro-campo" id="erro-numero" role="alert"></p>
+            </div>
+            <div class="grupo">
+              <label for="bairro">Bairro*</label>
+              <input class="entrada" id="bairro" name="bairro" aria-required="true" aria-describedby="erro-bairro">
+              <p class="erro-campo" id="erro-bairro" role="alert"></p>
+            </div>
+          </div>
+
+          <div>
+            <div class="grupo">
+              <label for="cidade">Cidade*</label>
+              <input class="entrada" id="cidade" name="cidade" autocomplete="address-level2" aria-required="true" aria-describedby="erro-cidade">
+              <p class="erro-campo" id="erro-cidade" role="alert"></p>
+            </div>
+            <div class="grupo">
+              <label for="estado">Estado*</label>
+              <input class="entrada" id="estado" name="estado" list="lista-estados" autocomplete="address-level1" aria-required="true" aria-describedby="erro-estado">
+              <datalist id="lista-estados"></datalist>
+              <p class="erro-campo" id="erro-estado" role="alert"></p>
+            </div>
+            <!-- Aparece quando já existe endereço cadastrado (Figma 4.3) -->
+            <div class="acoes-vista" id="acoes-vista" hidden>
+              <button class="botao verde" type="button" id="btn-editar">Editar endereço</button>
+              <button class="botao vermelho" type="button" id="btn-excluir">Excluir endereço</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="rodape">
+          <p class="obrigatorio">*Campos obrigatórios</p>
+          <div class="botoes" id="acoes-form">
+            <button class="botao vermelho" type="button" id="btn-cancelar">Cancelar</button>
+            <button class="botao verde" type="submit" id="btn-salvar">Salvar</button>
+          </div>
+          <span></span>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    /* =====================================================================
+       CAMADA DE DADOS (única parte que fala com o armazenamento)
+       Hoje: localStorage, só para simular. Quando o back estiver pronto,
+       troque o corpo destas 3 funções por fetch() às rotas dele.
+       O resto da tela não muda.
+       BACK: o tutor vem da sessão (request.user); aqui vem do "usuarioLogado".
+       ===================================================================== */
+    const Dados = {
+      chave() {
+        const p = new URLSearchParams(location.search);
+        const quem = p.has("id") ? "id-" + p.get("id") : localStorage.getItem("usuarioLogado");
+        return quem ? "pf_endereco_" + quem.toLowerCase() : null;
+      },
+      // BACK: GET /api/endereco/  -> objeto do endereço ou null (404)
+      async obter() {
+        try { return JSON.parse(localStorage.getItem(this.chave())); } catch { return null; }
+      },
+      // BACK: POST (novo) ou PUT (edição) /api/endereco/
+      // Campos: cep, rua, numero, bairro, cidade, estado, uf
+      async salvar(endereco) {
+        localStorage.setItem(this.chave(), JSON.stringify(endereco));
+        return endereco;
+      },
+      // BACK: DELETE /api/endereco/
+      async excluir() {
+        localStorage.removeItem(this.chave());
+      }
+    };
+
+    //if (!Dados.chave()) location.replace("tela_login.html");
+
+    /* ---------- Constantes e utilitários ---------- */
+    const ESTADOS = { AC:"Acre", AL:"Alagoas", AP:"Amapá", AM:"Amazonas", BA:"Bahia", CE:"Ceará", DF:"Distrito Federal", ES:"Espírito Santo", GO:"Goiás", MA:"Maranhão", MT:"Mato Grosso", MS:"Mato Grosso do Sul", MG:"Minas Gerais", PA:"Pará", PB:"Paraíba", PR:"Paraná", PE:"Pernambuco", PI:"Piauí", RJ:"Rio de Janeiro", RN:"Rio Grande do Norte", RS:"Rio Grande do Sul", RO:"Rondônia", RR:"Roraima", SC:"Santa Catarina", SP:"São Paulo", SE:"Sergipe", TO:"Tocantins" };
+    const CAMPOS = ["cep", "rua", "numero", "bairro", "cidade", "estado"];
+    const OBRIGATORIO = "Este campo é obrigatório.";
+    const semAcento = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+    const soDigitos = (s) => s.replace(/\D/g, "");
+    const ufDe = (texto) => {
+      const t = semAcento(texto);
+      return Object.keys(ESTADOS).find((uf) => uf.toLowerCase() === t || semAcento(ESTADOS[uf]) === t) || null;
+    };
+
+    const form = document.getElementById("form-endereco");
+    const f = form.elements;
+    let endereco = null;     // endereço salvo (ou null)
+    let modo = "cadastro";   // "cadastro" | "visualizar" | "editar"
+    let cepCache = { cep: null, res: null };
+
+    document.getElementById("lista-estados").innerHTML = Object.values(ESTADOS).map((n) => `<option value="${n}">`).join("");
+
+    const params = new URLSearchParams(location.search);
+    if (params.has("id")) document.getElementById("voltar").href += "?id=" + encodeURIComponent(params.get("id"));
+
+    function mensagem(campo, texto, invalido = true) {
+      const el = f[campo];
+      el.classList.toggle("invalido", Boolean(texto) && invalido);
+      el.setAttribute("aria-invalid", texto && invalido ? "true" : "false");
+      document.getElementById("erro-" + campo).textContent = texto || "";
+    }
+    const limparErros = () => CAMPOS.forEach((c) => mensagem(c, ""));
+
+    /* ---------- Modal (Figma 4.1 a 4.4) ---------- */
+    function abrirModal({ titulo, texto, botoes = [], pequeno = false, aoFechar }) {
+      const retorno = document.activeElement;
+      const fundo = document.createElement("div");
+      fundo.className = "fundo-modal";
+      fundo.innerHTML = `<div class="modal ${pequeno ? "pequeno" : ""}" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+        <button class="fechar" type="button" aria-label="Fechar">X</button>
+        <h2 id="modal-titulo"></h2><p></p><div class="botoes" hidden></div></div>`;
+      fundo.querySelector("h2").textContent = titulo;
+      fundo.querySelector("p").textContent = texto;
+
+      function fechar(chamar = true) {
+        fundo.remove();
+        document.removeEventListener("keydown", teclas);
+        if (retorno && retorno.focus) retorno.focus();
+        if (chamar && aoFechar) aoFechar();
+      }
+      function teclas(e) {
+        if (e.key === "Escape") return fechar();
+        if (e.key !== "Tab") return;
+        const itens = [...fundo.querySelectorAll("button")];
+        const i = itens.indexOf(document.activeElement);
+        if (e.shiftKey && i <= 0) { e.preventDefault(); itens[itens.length - 1].focus(); }
+        else if (!e.shiftKey && i === itens.length - 1) { e.preventDefault(); itens[0].focus(); }
+      }
+      fundo.querySelector(".fechar").addEventListener("click", () => fechar());
+
+      const area = fundo.querySelector(".botoes");
+      botoes.forEach((b) => {
+        const el = document.createElement("button");
+        el.type = "button"; el.className = "botao " + b.cor; el.textContent = b.rotulo;
+        el.addEventListener("click", () => { fechar(false); if (b.acao) b.acao(); });
+        el.dataset.padrao = b.padrao ? "1" : "";
+        area.appendChild(el);
+      });
+      area.hidden = botoes.length === 0;
+
+      document.body.appendChild(fundo);
+      document.addEventListener("keydown", teclas);
+      (fundo.querySelector('[data-padrao="1"]') || fundo.querySelector(".fechar")).focus();
+    }
+
+    /* ---------- Modos da tela ---------- */
+    function setModo(m) {
+      modo = m;
+      const ler = m === "visualizar";
+      CAMPOS.forEach((c) => { f[c].disabled = ler; });
+      document.getElementById("acoes-vista").hidden = !ler;
+      document.getElementById("acoes-form").hidden = ler;
+    }
+    function preencher(e) {
+      CAMPOS.forEach((c) => { f[c].value = e ? e[c] : ""; });
+      limparErros();
+    }
+
+    /* ---------- CEP: consulta ViaCEP e preenchimento automático ---------- */
+    async function consultarCep(cep) {
+      if (cepCache.cep === cep) return cepCache.res;
+      let res;
+      try {
+        const r = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        if (r.status === 400) res = { ok: false, motivo: "invalido" };
+        else if (!r.ok) res = { ok: false, motivo: "rede" };
+        else {
+          const d = await r.json();
+          res = d.erro ? { ok: false, motivo: "invalido" } : { ok: true, dados: d };
+        }
+      } catch { res = { ok: false, motivo: "rede" }; }
+      if (res.motivo !== "rede") cepCache = { cep, res };
+      return res;
+    }
+
+    async function buscarCep() {
+      const cep = soDigitos(f.cep.value);
+      if (cep.length !== 8) return;
+      mensagem("cep", "Buscando CEP…", false);
+      const res = await consultarCep(cep);
+      if (soDigitos(f.cep.value) !== cep) return;   // o usuário mudou o CEP enquanto buscava
+      if (res.ok) {
+        const d = res.dados;
+        f.rua.value = d.logradouro || ""; f.bairro.value = d.bairro || "";
+        f.cidade.value = d.localidade || ""; f.estado.value = ESTADOS[d.uf] || d.uf || "";
+        CAMPOS.forEach((c) => mensagem(c, ""));
+        (f.rua.value ? f.numero : f.rua).focus();
+      } else if (res.motivo === "invalido") {
+        mensagem("cep", "CEP inválido.");
+      } else {
+        mensagem("cep", "Não foi possível consultar o CEP agora. Preencha os campos manualmente.", false);
+      }
+    }
+
+    f.cep.addEventListener("input", () => {   // máscara 00000-000
+      const d = soDigitos(f.cep.value).slice(0, 8);
+      f.cep.value = d.length > 5 ? d.slice(0, 5) + "-" + d.slice(5) : d;
+      mensagem("cep", "");
+      if (d.length === 8) buscarCep();
+    });
+    f.cep.addEventListener("blur", () => { if (soDigitos(f.cep.value).length === 8) buscarCep(); });
+
+    /* ---------- Validação ---------- */
+    async function validar() {
+      let enderecoInvalido = false;
+      CAMPOS.forEach((c) => { if (!f[c].value.trim()) mensagem(c, OBRIGATORIO); else if (c !== "cep") mensagem(c, ""); });
+
+      const cep = soDigitos(f.cep.value);
+      let uf = null;
+      if (f.estado.value.trim()) {
+        uf = ufDe(f.estado.value);
+        if (!uf) { mensagem("estado", "Informe um estado válido."); enderecoInvalido = true; }
+      }
+      if (f.numero.value.trim() && !/^[0-9A-Za-z\/\- ]{1,10}$/.test(f.numero.value.trim())) mensagem("numero", "Informe um número válido ou S/N.");
+
+      if (f.cep.value.trim()) {
+        if (cep.length !== 8) { mensagem("cep", "CEP inválido."); enderecoInvalido = true; }
+        else {
+          const res = await consultarCep(cep);
+          if (res.ok) {   // confere cidade e estado com o CEP
+            mensagem("cep", "");
+            if (f.cidade.value.trim() && semAcento(f.cidade.value) !== semAcento(res.dados.localidade || "")) { mensagem("cidade", "A cidade não confere com o CEP."); enderecoInvalido = true; }
+            if (uf && uf !== res.dados.uf) { mensagem("estado", "O estado não confere com o CEP."); enderecoInvalido = true; }
+          } else if (res.motivo === "invalido") { mensagem("cep", "CEP inválido."); enderecoInvalido = true; }
+          else mensagem("cep", "");   // sem internet: não dá para conferir, segue com os dados digitados
+        }
+      }
+
+      const primeiro = form.querySelector(".invalido");
+      if (!primeiro) return { ok: true, uf };
+      if (enderecoInvalido) abrirModal({ titulo: "ERRO", texto: "Endereço inválido!", aoFechar: () => primeiro.focus() });
+      else primeiro.focus();
+      return { ok: false };
+    }
+
+    /* ---------- Ações ---------- */
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById("btn-salvar");
+      btn.disabled = true;
+      try {
+        const v = await validar();
+        if (!v.ok) return;
+        const foiEdicao = modo === "editar";
+        endereco = await Dados.salvar({   // BACK: salvar no banco
+          cep: f.cep.value.trim(), rua: f.rua.value.trim(), numero: f.numero.value.trim(),
+          bairro: f.bairro.value.trim(), cidade: f.cidade.value.trim(),
+          estado: ESTADOS[v.uf], uf: v.uf
+        });
+        abrirModal({
+          titulo: "Parabéns!",
+          texto: foiEdicao ? "Endereço atualizado com sucesso!" : "Endereço cadastrado com sucesso!",
+          aoFechar: () => { preencher(endereco); setModo("visualizar"); document.getElementById("btn-editar").focus(); }
+        });
+      } finally { btn.disabled = false; }
+    });
+
+    document.getElementById("btn-cancelar").addEventListener("click", () => {
+      if (modo === "editar") { preencher(endereco); setModo("visualizar"); document.getElementById("btn-editar").focus(); }
+      else { preencher(null); f.cep.focus(); }
+    });
+    document.getElementById("btn-editar").addEventListener("click", () => { setModo("editar"); f.cep.focus(); });
+    document.getElementById("btn-excluir").addEventListener("click", () => {
+      abrirModal({
+        titulo: "Atenção!", texto: "Você tem certeza que deseja excluir esse endereço?", pequeno: true,
+        botoes: [
+          { rotulo: "Sim", cor: "verde", acao: async () => {
+            await Dados.excluir();   // BACK: excluir o endereço no banco
+            endereco = null; cepCache = { cep: null, res: null };
+            abrirModal({ titulo: "Atenção!", texto: "Endereço excluído com sucesso!", aoFechar: () => { preencher(null); setModo("cadastro"); f.cep.focus(); } });
+          } },
+          { rotulo: "Não", cor: "vermelho", padrao: true }
+        ]
+      });
+    });
+
+    /* ---------- Início ---------- */
+    (async () => {
+      endereco = await Dados.obter();   // BACK: carregar o endereço do tutor logado
+      if (endereco) { preencher(endereco); setModo("visualizar"); } else setModo("cadastro");
+    })();
+  </script>
+</body>
+</html>
