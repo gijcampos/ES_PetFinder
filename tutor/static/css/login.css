@@ -36,8 +36,9 @@ body {
 
 .logo {
   display: block;
-  width: clamp(300px, 85vw, 800px);
-  height: auto;
+  height: clamp(140px, 38vh, 380px);
+  width: auto;
+  max-width: 100%;
 }
 
 .sr-only {

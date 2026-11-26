@@ -29,22 +29,19 @@ def cadastro(request):
     return render(request, 'usuarios/<tela_do_cadastro.html>', {'form': form}) # !!! MUDAR <tela_do_cadastro.html> PARA SEU RESPECTIVO ARQUIVO QUANDO HOUVER A TELA DE CADASTRO !!!
 
 # ===== Tela de Login =====
-
 def login_view(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        senha = request.POST.get('senha')
-
+        email = request.POST.get('email', '').strip()
+        senha = request.POST.get('senha', '')
         usuario = Usuario.objects.filter(email=email).first()
 
         if usuario and check_password(senha, usuario.senha_hash):
             request.session['id_usuario'] = usuario.id_usuario
-            return redirect('ambiente_tutor')
-        else:
-            messages.error(request, 'E-mail ou senha inválidos.')
+            return redirect('tutor:ambiente_tutor')
 
-    return render(request, 'usuarios/usuario_login.html')
+        messages.error(request, 'E-mail ou senha inválidos.')
 
+    return render(request, 'tutor/tela_login.html')
 # ===== Funções de Edição e Exclusão do formulário de Cadastro =====
 
 def editar_perfil(request, id): #Solicita o ID do cadastro do usuario
