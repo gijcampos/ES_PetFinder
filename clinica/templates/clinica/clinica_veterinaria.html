@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -7,12 +8,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style-clinica.css">
+  <link rel="stylesheet" href="{% static 'clinica/css/style-clinica.css' %}">
 </head>
 <body>
   <header>
-    <a href="login.html" aria-label="PetFinder - voltar ao início">
-      <img class="logo" src="img/PetFinder-Logo.png" alt="PetFinder - Coleira inteligente">
+    <a href="{% url 'login' %}" aria-label="PetFinder - voltar ao início">
+      <img class="logo" src="{% static 'clinica/img/PetFinder-Logo.png' %}" alt="PetFinder - Coleira inteligente">
     </a>
   </header>
 
@@ -29,7 +30,7 @@
         </form>
         <div id="mapa" class="mapa" aria-label="Mapa das clínicas veterinárias">
           <div id="palco" class="palco">
-            <img class="mapa-img" src="mapa-simulado.png" alt="" draggable="false">
+            <img class="mapa-img" src="{% static 'clinica/img/mapa-simulado.png' %}" alt="" draggable="false">
           </div>
         </div>
       </div>
@@ -38,7 +39,7 @@
     </section>
   </main>
 
-  <script src="clinicas.js"></script>
- 
+  <script src="{% static 'clinica/js/mapa_clínicas.js' %}"></script>
+
 </body>
 </html>

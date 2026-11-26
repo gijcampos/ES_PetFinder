@@ -46,7 +46,7 @@ def listar(request, id_tutor):
         'apenas_abertas': apenas_abertas,
     }
 
-    return render(request, 'clinica/', context)  # --> COLOCAR UMA ROTA HTML PARA A LISTAGEM DAS CLINICAS
+    return render(request, 'clinica/clinica_veterinaria.html', context)  # --> COLOCAR UMA ROTA HTML PARA A LISTAGEM DAS CLINICAS
 
 # ===== CLINICA FAVORITA =====
 
@@ -66,7 +66,7 @@ def favorita(request, id_tutor, id_clinica):
 
 # ===== EDITAR =====
 
-def editar(request, id_clinica):
+def editar(request, id_tutor, id_clinica):
     clinica = get_object_or_404(Clinica, pk=id_clinica)
     
     if request.method == 'POST':
@@ -74,7 +74,7 @@ def editar(request, id_clinica):
         
         if form.is_valid():
             form.save()
-            return redirect('listar_clinicas') # Ajuste a rota de redirecionamento conforme seu urls.py
+            return redirect('listar_clinicas', id_tutor=id_tutor) # Ajuste a rota de redirecionamento conforme seu urls.py
     else:
         form = ClinicaForm(instance=clinica)
         
@@ -82,8 +82,8 @@ def editar(request, id_clinica):
 
 # ===== EXCLUSÃO =====
 
-def excluir(request, id_clinica):
+def excluir(request, id_tutor, id_clinica):
     clinica = get_object_or_404(Clinica, pk=id_clinica)
     clinica.delete()
 
-    return redirect('listar_clinicas') # --> COLOCAR UMA ROTA HTML PARA O REDIRECIONAR DEPOIS DE APAGAR A CLINICA
+    return redirect('listar_clinicas', id_tutor=id_tutor) # --> COLOCAR UMA ROTA HTML PARA O REDIRECIONAR DEPOIS DE APAGAR A CLINICA
