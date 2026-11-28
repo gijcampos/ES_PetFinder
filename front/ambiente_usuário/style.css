@@ -1,0 +1,180 @@
+:root {
+  --azul: #033960;
+  --cartao: #9D7680;
+  --campo: #d9d9d9;
+  --branco: #ffffff;
+  --vermelho: #d00000;
+  --verde: #049a1a;
+  --tinta: #222;
+  --verde-claro: #dff3da;
+  --vermelho-claro: #fbe0e0;
+  --aviso: #8a5a00;
+  --aviso-claro: #fff0cf;
+}
+ 
+* { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.45;
+  color: var(--branco);
+  background: var(--azul);
+}
+ 
+header {
+  padding: 16px 40px;
+  background-color: var(--branco);
+  background-image: url("pagina-patinhas-clara.png");
+  background-size: cover;
+}
+ 
+.logo {
+      display: block;
+      width: clamp(130px, 22vw, 180px);
+      height: auto;
+    }
+h1 {
+      margin-bottom: 8px;
+      font-weight: 300;
+      font-size: clamp(1.6rem, 4.4vw, 3rem);
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+.hero p { font-size: clamp(1rem, 2vw, 1.35rem); }
+ 
+main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 14px;
+  padding: 14px;
+}
+ 
+.cartao {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 3vw, 40px) clamp(20px, 3.5vw, 48px);
+  background: var(--cartao);
+  border-radius: 28px;
+}
+.cartao h2 { margin-bottom: 18px; font-size: 1.5rem; font-weight: 600; text-align: center; }
+ 
+/* Campos */
+.field { margin-bottom: 16px; }
+label { display: block; margin-bottom: 2px; font-size: 1.25rem; font-weight: 400; }
+label i { font-style: normal; color: #ffd0d0; }
+label small { font-size: .8rem; opacity: .85; }
+ 
+input[type=text], input[type=tel], input[type=time], select {
+  width: 100%;
+  height: 39px;
+  padding: 0 12px;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--tinta);
+  background: var(--campo);
+  border: 2px solid transparent;
+  border-radius: 4px;
+}
+input::placeholder { color: #6b6b73; }
+input[aria-invalid=true] { border-color: var(--vermelho); background: #fff3f3; }
+input:focus-visible, select:focus-visible, button:focus-visible {
+  outline: 3px solid var(--branco);
+  outline-offset: 2px;
+}
+input.auto, select.auto { border-color: #7fd06f; background: #f1fbee; }
+ 
+.hint { font-size: .85rem; margin: 5px 2px 0; }
+.err { display: none; font-size: .85rem; margin: 5px 2px 0; padding: 3px 10px; background: var(--vermelho); border-radius: 6px; }
+.err.on { display: block; }
+ 
+.row { display: flex; gap: 10px; flex-wrap: wrap; }
+.row input { flex: 1 1 220px; width: auto; }
+ 
+/* Funcionamento */
+fieldset { border: 0; margin-top: 20px; }
+legend { font-size: 1.05rem; font-weight: 600; margin-bottom: 10px; }
+.switch { display: flex; align-items: center; gap: 10px; font-size: 1rem; margin-bottom: 12px; padding: 10px 14px; background: rgba(255,255,255,.14); border-radius: 10px; cursor: pointer; }
+.switch input { width: 20px; height: 20px; accent-color: var(--verde); }
+.switch small { display: block; font-size: .78rem; opacity: .9; }
+ 
+.sched-wrap { overflow-x: auto; }
+.sched { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.sched th { font-weight: 600; text-align: left; padding: 4px 6px 4px 0; white-space: nowrap; }
+.sched td { padding: 4px; }
+.sched input[type=time] { height: 34px; padding: 0 8px; font-size: .9rem; }
+.sched input[type=checkbox] { accent-color: var(--azul); width: 16px; height: 16px; vertical-align: middle; }
+.sched .cl { white-space: nowrap; }
+.sched tr.off input[type=time] { opacity: .45; }
+ 
+/* Rodapé e botões */
+.rodape {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 22px;
+}
+.obrigatorio { font-size: 1rem; font-weight: 300; }
+.acoes { display: flex; gap: 38px; margin-left: auto; padding-right: 6px; }
+ 
+button {
+  width: 152px;
+  height: 40px;
+  font: inherit;
+  font-size: 1.1rem;
+  color: var(--branco);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.cancelar { background: var(--vermelho); }
+.salvar { background: var(--verde); }
+.cancelar:hover { background: #a80000; }
+.salvar:hover { background: #037814; }
+.btn-fetch { width: auto; height: 39px; padding: 0 20px; font-size: 1rem; border-radius: 4px; background: var(--azul); white-space: nowrap; }
+.btn-fetch:hover { background: #022a48; }
+.btn-fetch:disabled { opacity: .7; cursor: wait; }
+ 
+/* Painel de situação */
+.note { margin-bottom: 18px; padding: 12px 16px; font-size: .95rem; background: rgba(255,255,255,.2); border-radius: 8px; }
+.clinic-name { font-size: 1.25rem; font-weight: 700; }
+.clinic-meta { margin: 2px 0 14px; font-size: .92rem; word-break: break-word; }
+.situacao { display: flex; align-items: center; gap: 14px; padding: 16px 18px; color: var(--tinta); border-radius: 16px; }
+.situacao.open { background: var(--verde-claro); }
+.situacao.closed { background: var(--vermelho-claro); }
+.situacao.empty { background: #e9e0e2; }
+.situacao strong { display: block; font-size: 1.3rem; line-height: 1.2; }
+.situacao span { font-size: .92rem; }
+.dot { flex: none; width: 16px; height: 16px; border-radius: 50%; background: #777; }
+.open .dot { background: var(--verde); box-shadow: 0 0 0 5px rgba(4,154,26,.25); }
+.closed .dot { background: var(--vermelho); }
+.holiday { margin-top: 12px; padding: 9px 14px; font-size: .9rem; font-weight: 600; color: var(--aviso); background: var(--aviso-claro); border-radius: 10px; }
+.clock { margin: 14px 2px 10px; font-size: .88rem; }
+.week { width: 100%; border-collapse: collapse; font-size: .92rem; background: rgba(255,255,255,.12); border-radius: 12px; overflow: hidden; }
+.week td { padding: 7px 14px; }
+.week td:last-child { text-align: right; }
+.week tr.today { background: rgba(255,255,255,.28); font-weight: 700; }
+ 
+#toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 9; max-width: 90vw;
+  transform: translateX(-50%) translateY(20px);
+  padding: 12px 22px; font-weight: 600; color: var(--branco);
+  background: var(--verde); border-radius: 12px;
+  opacity: 0; pointer-events: none; transition: .25s;
+}
+#toast.on { opacity: 1; transform: translateX(-50%); }
+ 
+@media (max-width: 880px) { main { grid-template-columns: 1fr; } }
+@media (max-width: 760px) {
+  header { padding: 16px 20px; }
+  .acoes { width: 100%; gap: 16px; }
+  .acoes button { flex: 1; width: auto; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+ 

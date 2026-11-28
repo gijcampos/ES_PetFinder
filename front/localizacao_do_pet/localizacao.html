@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Localização em tempo real | PetFinder (prévia)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <a class="brand" href="#" aria-label="PetFinder - Coleira inteligente">
+    <img
+      class="logo"
+      src="PetFinder-Logo.png"
+      alt="PetFinder - Coleira inteligente"
+    >
+  </a>
+</header>
+
+<main>
+  <section class="cartao" aria-label="Localização em tempo real">
+    <div class="mapa-wrap">
+      <div id="mapa" role="img" aria-label="Mapa ilustrativo com a posição atual do pet e o raio de segurança"></div>
+      <p class="mapa-msg" id="mapa-msg" hidden></p>
+    </div>
+
+    <div class="painel-wrap">
+      <aside class="painel">
+        <h1>Meus pets</h1>
+        <ul class="pets" id="pets" aria-live="polite"></ul>
+        <hr>
+        <section class="detalhe" id="detalhe"></section>
+        <p class="aviso" id="aviso" role="status" hidden>Sem conexão. Tentando atualizar novamente...</p>
+        <a class="btn-hist" id="hist" href="historico.html" hidden>Ver histórico de hoje</a>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

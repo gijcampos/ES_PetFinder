@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cadastre sua clínica preferida | PetFinder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <a href="login.html" aria-label="PetFinder - voltar ao início">
+      <img class="logo" src="PetFinder-Logo.png" alt="PetFinder - Coleira inteligente"
+           onerror="this.style.display='none'">
+    </a>
+</header>
+
+<section class="hero">
+  <h1>CADASTRE CLÍNICA PREFERIDA</h1>
+  <p>Tenha as informações e o agendamento da sua clínica sempre à mão.</p>
+</section>
+
+<main>
+  <!-- FORMULÁRIO -->
+  <form class="cartao" id="form" novalidate autocomplete="off">
+    <h2>Dados da clínica</h2>
+
+    <div class="field">
+      <label for="site">Site da clínica <small>(opcional)</small></label>
+      <div class="row">
+        <input type="text" id="site" placeholder="www.suaclinica.com.br" inputmode="url" maxlength="200" aria-describedby="h-site e-site">
+        <button type="button" class="btn-fetch" id="fetch">Buscar dados</button>
+      </div>
+      <p class="hint" id="h-site">Preenchemos o que encontrarmos. Você confere tudo antes de salvar.</p>
+      <p class="err" id="e-site" role="alert"></p>
+    </div>
+
+    <div class="field">
+      <label for="nome">Nome da clínica <i>*</i></label>
+      <input type="text" id="nome" placeholder="Ex: Clínica Vet" maxlength="80" aria-describedby="e-nome" required>
+      <p class="err" id="e-nome" role="alert"></p>
+    </div>
+
+    <div class="field">
+      <label for="end">Endereço <i>*</i></label>
+      <input type="text" id="end" placeholder="Ex: Rua, Nº - Bairro, Cidade" maxlength="140" aria-describedby="e-end" required>
+      <p class="err" id="e-end" role="alert"></p>
+    </div>
+
+    <div class="field">
+      <label for="tel">Telefone <i>*</i></label>
+      <input type="tel" id="tel" placeholder="(41) 99999-9999" inputmode="numeric" maxlength="15" aria-describedby="h-tel e-tel" required>
+      <p class="hint" id="h-tel">Digite um telefone válido com DDD.</p>
+      <p class="err" id="e-tel" role="alert"></p>
+    </div>
+
+    <fieldset>
+      <legend>Funcionamento</legend>
+
+      <div class="field">
+        <label for="tz">Fuso horário da clínica</label>
+        <select id="tz">
+          <option value="America/Sao_Paulo">Brasília (UTC-3)</option>
+          <option value="America/Manaus">Amazonas / Manaus (UTC-4)</option>
+          <option value="America/Rio_Branco">Acre / Rio Branco (UTC-5)</option>
+          <option value="America/Noronha">Fernando de Noronha (UTC-2)</option>
+        </select>
+      </div>
+
+      <label class="switch" for="h24">
+        <input type="checkbox" id="h24">
+        <span>Atendimento 24 horas<small>Aberta todos os dias, inclusive feriados.</small></span>
+      </label>
+
+      <div class="sched-wrap">
+        <table class="sched" id="sched" aria-label="Horário por dia da semana"></table>
+      </div>
+      <p class="err" id="e-sched" role="alert"></p>
+    </fieldset>
+
+    <div class="rodape">
+      <p class="obrigatorio">* Campos obrigatórios</p>
+      <div class="acoes">
+        <button type="button" class="cancelar" id="cancel">Cancelar</button>
+        <button type="submit" class="salvar">Salvar</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- PAINEL DE STATUS -->
+  <aside class="cartao" aria-labelledby="painel">
+    <h2 id="painel" class="sr" style="position:absolute;left:-9999px">Situação da clínica</h2>
+    <div class="note">O horário de funcionamento e se a clínica está aberta ou fechada são exibidos automaticamente.</div>
+    <p class="clinic-name" id="p-nome">Sua clínica</p>
+    <p class="clinic-meta" id="p-meta">Preencha os dados ao lado para ver a prévia.</p>
+    <div id="p-status" class="situacao empty" aria-live="polite"></div>
+    <div id="p-holiday"></div>
+    <p class="clock" id="p-clock"></p>
+    <table class="week" id="p-week"></table>
+  </aside>
+</main>
+
+<div id="toast" role="status"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
